@@ -15,7 +15,7 @@ TEST_FILE = "/kaggle/input/dl-dataset/DL Dataset/test.txt"
 raw_x_test, raw_y_test = load_data(TEST_FILE)
 
 # Preprocess Data
-x_test, y_test, _ = preprocess_data([], [], [], [], raw_x_test, raw_y_test, char_index)
+x_test, y_test, char_index = preprocess_data(([], []), ([], []), (raw_x_test, raw_y_test))
 
 # Load Model
 model = create_model(voc_size=len(char_index.keys()))

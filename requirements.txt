@@ -13,5 +13,6 @@ flasgger
 pylint==3.1.0
 
 tensorflow==2.16.1
+tensorrt==10.0.1
 keras==3.3.3
 seaborn==0.13.2
