@@ -1,16 +1,21 @@
+"""
+train.py
+
+Trains model based on previously loaded data.
+"""
+
 # train.py
-from model import create_model, compile_model
 from data_preprocessing import preprocess_data, load_data
-import numpy as np
+from model import create_model, compile_model
 
 # Load Data
-train_file = "/kaggle/input/dl-dataset/DL Dataset/train.txt"
-val_file = "/kaggle/input/dl-dataset/DL Dataset/val.txt"
-test_file = "/kaggle/input/dl-dataset/DL Dataset/test.txt"
+TRAIN_FILE = "/kaggle/input/dl-dataset/DL Dataset/train.txt"
+VAL_FILE = "/kaggle/input/dl-dataset/DL Dataset/val.txt"
+TEST_FILE = "/kaggle/input/dl-dataset/DL Dataset/test.txt"
 
-raw_x_train, raw_y_train = load_data(train_file)
-raw_x_val, raw_y_val = load_data(val_file)
-raw_x_test, raw_y_test = load_data(test_file)
+raw_x_train, raw_y_train = load_data(TRAIN_FILE)
+raw_x_val, raw_y_val = load_data(VAL_FILE)
+raw_x_test, raw_y_test = load_data(TEST_FILE)
 
 # Preprocess Data
 x_train, y_train, x_val, y_val, x_test, y_test, char_index = preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, raw_y_test)

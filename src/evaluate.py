@@ -1,14 +1,18 @@
+"""
+Evaluates trained model
+"""
+
 # evaluate.py
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+import numpy as np
 from model import create_model
 from data_prep import preprocess_data, load_data
-import numpy as np
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 # Load Data
-test_file = "/kaggle/input/dl-dataset/DL Dataset/test.txt"
-raw_x_test, raw_y_test = load_data(test_file)
+TEST_FILE = "/kaggle/input/dl-dataset/DL Dataset/test.txt"
+raw_x_test, raw_y_test = load_data(TEST_FILE)
 
 # Preprocess Data
 x_test, y_test, _ = preprocess_data([], [], [], [], raw_x_test, raw_y_test, char_index)

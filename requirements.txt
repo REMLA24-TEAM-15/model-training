@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:98d2841457b32e4dd4e2710ef07ae1b33b58414644c5060c2459946eb8c8e0ff
-size 124
+numpy==1.26
+pandas==2.2.2
+nltk==3.6.1
+scipy==1.13
+matplotlib==3.4.1
+scikit-learn==1.4.2
+
+Flask==1.1.4
+markupsafe==2.0.1
+jinja2<3.1.0
+flasgger
+
+pylint==3.1.0
+
+tensorflow==2.16.1
+keras==3.3.3
+seaborn==0.13.2
