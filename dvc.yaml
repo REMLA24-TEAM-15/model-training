@@ -10,7 +10,9 @@ stages:
     deps:
     - src/data_prep.py
     - params.yaml
-#    - todo
+    - datasets/small_dataset/train.txt
+    - datasets/small_dataset/test.txt
+    - datasets/small_dataset/val.txt
     params:
     - dataset_dir
     outs:
@@ -27,8 +29,13 @@ stages:
     - batch_train
     - epoch
     - categories
-    metrics:
-    - datasets/metrics/metrics.json
-    plots:
-    - datasets/metrics/plots/metrics:
-        x: step
+    outs:
+    - datasets/metrics/metrics.json:train.accuracy
+    - datasets/metrics/metrics.json:train.loss
+    - datasets/metrics/metrics.json:eval.accuracy
+    - datasets/metrics/metrics.json:eval.loss
+metrics:
+- datasets/metrics/metrics.json
+plots:
+- datasets/metrics/plots/metrics:
+    x: step
