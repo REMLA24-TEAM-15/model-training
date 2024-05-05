@@ -1,0 +1,34 @@
+stages:
+  get_data:
+    cmd: python src/get_data.py
+    deps:
+    - src/get_data.py
+#    outs:
+#    - todo
+  data_prep:
+    cmd: python src/data_prep.py
+    deps:
+    - src/data_prep.py
+    - params.yaml
+#    - todo
+    params:
+    - dataset_dir
+    outs:
+    - datasets/small_dataset/processed_data.pkl
+  train:
+    cmd: python src/train.py
+    deps:
+    - src/train.py
+    - datasets/small_dataset/processed_data.pkl
+    params:
+    - dataset_dir
+    - loss_function
+    - optimizer
+    - batch_train
+    - epoch
+    - categories
+    metrics:
+    - datasets/metrics/metrics.json
+    plots:
+    - datasets/metrics/plots/metrics:
+        x: step

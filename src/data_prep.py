@@ -33,19 +33,19 @@ def preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, 
     return x_train, y_train, x_val, y_val, x_test, y_test, char_index
 
 
-if __name__ == '__main__':
-    with open("src/params.yaml") as stream:
+def main():
+    with open("params.yaml") as stream:
         try:
             params = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
-            raise "Could not load src/params.yaml"
+            raise "Could not load params.yaml"
 
-    data_path = params['dataset_dir']
+    data_path = params['dataset_dir'] + 'small_dataset/'
 
-    train_file = "train.txt"
-    val_file = "val.txt"
-    test_file = "test.txt"
+    train_file = data_path + "train.txt"
+    val_file = data_path + "val.txt"
+    test_file = data_path + "test.txt"
 
     raw_x_train, raw_y_train = load_data(train_file)
     raw_x_val, raw_y_val = load_data(val_file)
@@ -55,3 +55,9 @@ if __name__ == '__main__':
 
     with open(data_path + 'processed_data.pkl', 'wb') as f:
         pickle.dump(out, f)
+
+    print("Done preprocessing data. Exiting data_prep.py")
+
+
+if __name__ == '__main__':
+    main()
