@@ -38,6 +38,8 @@ def create_model(voc_size):
 
     return model
 
+
 def compile_model(model, loss_function, optimizer):
     model.compile(loss=loss_function, optimizer=optimizer, metrics=['accuracy'])
     return model
+
