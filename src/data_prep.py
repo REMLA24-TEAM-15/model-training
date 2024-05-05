@@ -4,6 +4,7 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 import pickle
+import yaml
 
 
 def load_data(file_path):
@@ -33,7 +34,15 @@ def preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, 
 
 
 if __name__ == '__main__':
-    data_path = "/kaggle/input/dl-dataset/DL Dataset/"
+    with open("src/params.yaml") as stream:
+        try:
+            params = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+            raise "Could not load src/params.yaml"
+
+    data_path = params['dataset_dir']
+
     train_file = "train.txt"
     val_file = "val.txt"
     test_file = "test.txt"
