@@ -12,6 +12,7 @@ tensorrt==10.0.1
 keras==3.3.3
 
 pylint==3.1.0
+dslinter==2.0.9
 scikit-learn
 tensorflow
 numpy
@@ -19,5 +20,5 @@ pandas
 matplotlib
 dvclive
 kaggle
-os
+
 seaborn
