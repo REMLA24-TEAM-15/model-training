@@ -1,15 +1,24 @@
-
-from model import create_model
-from data_prep import preprocess_data, load_data
+"""
+Prepares data for further processing.
+"""
 import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+from model import create_model
+from data_prep import preprocess_data, load_data
+
 def main():
+    """
+    oads data from a file.
+    Prepares list of labels and list of datapoints.
+    Tokenizes and pads data. Encodes labels.
+    """
     # Load Data
     test_file = "/kaggle/input/dl-dataset/DL Dataset/test.txt"
     raw_x_test, raw_y_test = load_data(test_file)
+    char_index = None
 
     # Preprocess Data
     x_test, y_test, _ = preprocess_data([], [], [], [], raw_x_test, raw_y_test, char_index)

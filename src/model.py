@@ -1,9 +1,21 @@
-# model.py
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Embedding, Conv1D, MaxPooling1D, Flatten
+"""
+model.py
 
+Configures training model parametres.
+"""
+from keras.models import Sequential
+from keras.layers import Embedding, Conv1D, MaxPooling1D, Flatten, Dense, Dropout
 
 def create_model(voc_size, categories):
+    """
+    Builds a model for classification tasks.
+
+    Args:
+        voc_size (int): Vocabulary size for the embedding layer.
+
+    Returns:
+        keras.models.Sequential: Compiled Keras model.
+    """
     model = Sequential()
     model.add(Embedding(voc_size + 1, 50))
 
@@ -42,4 +54,3 @@ def create_model(voc_size, categories):
 def compile_model(model, loss_function, optimizer):
     model.compile(loss=loss_function, optimizer=optimizer, metrics=['accuracy'])
     return model
-
