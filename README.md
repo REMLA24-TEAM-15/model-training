@@ -8,7 +8,7 @@
 
 2. **Navigate to the project directory:**
    ```bash
-   cd repository
+   cd REMLA-GROUP-15
 
 3. **Create a virtual environment:**
    ```bash
@@ -28,3 +28,8 @@
 6. **Install the dependencies from requirements.txt:**
    ```bash
    pip install -r requirements.txt
+
+7. **DVC:**
+   ```bash
+   dvc pull
+   dvc repro
