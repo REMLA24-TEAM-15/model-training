@@ -1,8 +1,8 @@
-# model.py
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Embedding, Conv1D, MaxPooling1D, Flatten
+"""
+model.py
 
-
+Configures training model parametres.
+"""
 def create_model(voc_size, categories):
     model = Sequential()
     model.add(Embedding(voc_size + 1, 50))

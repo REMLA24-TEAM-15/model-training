@@ -1,4 +1,8 @@
-# train.py
+"""
+train.py
+
+Trains model based on previously loaded data.
+"""
 from model import create_model, compile_model
 import yaml
 import pickle

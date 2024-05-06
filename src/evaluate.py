@@ -1,3 +1,6 @@
+"""
+Evaluates trained model.
+"""
 # evaluate.py
 from model import create_model
 from data_prep import preprocess_data, load_data

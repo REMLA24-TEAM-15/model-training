@@ -1,5 +1,6 @@
-# This module downloads the dataset from kaggle and stores it in the data folder.
-
+"""
+This module downloads the dataset from kaggle and stores it in the data folder.
+"""
 import os
 import kaggle
 
