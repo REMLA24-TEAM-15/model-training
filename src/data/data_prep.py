@@ -1,10 +1,10 @@
-
 from model import create_model
 from data_prep import preprocess_data, load_data
 import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
+
 
 def main():
     # Load Data
@@ -36,6 +36,7 @@ def main():
     # Plot Confusion Matrix
     sns.heatmap(confusion_mat, annot=True)
     plt.show()
+
 
 if __name__ == "__main__":
     main()

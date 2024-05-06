@@ -1,41 +1,57 @@
 stages:
   get_data:
-    cmd: python src/get_data.py
+    cmd: python src/data/get_data.py
     deps:
-    - src/get_data.py
-#    outs:
-#    - todo
+    - src/data/get_data.py
+    outs:
+    - data/raw/DL Dataset/test.txt
+    - data/raw/DL Dataset/train.txt
+    - data/raw/DL Dataset/val.txt
   data_prep:
-    cmd: python src/data_prep.py
+    cmd: python src/data/data_prep.py
     deps:
-    - src/data_prep.py
-    - params.yaml
-    - datasets/small_dataset/train.txt
-    - datasets/small_dataset/test.txt
-    - datasets/small_dataset/val.txt
-    params:
-    - dataset_dir
+    - src/data/data_prep.py
+    - data/raw/DL Dataset/test.txt
+    - data/raw/DL Dataset/train.txt
+    - data/raw/DL Dataset/val.txt
     outs:
-    - datasets/small_dataset/processed_data.pkl
+    - data/processed/char_index.joblib
+    - data/processed/x_data.joblib
+    - data/processed/y_data.joblib
+  model:
+    cmd: python src/model/model.py
+    deps:
+    - src/model/model.py
+    - configs/params.yaml
+    - data/processed/char_index.joblib
+    outs:
+    - src/model/model.h5
   train:
-    cmd: python src/train.py
+    cmd: python src/model/train.py
     deps:
-    - src/train.py
-    - datasets/small_dataset/processed_data.pkl
-    params:
-    - dataset_dir
-    - loss_function
-    - optimizer
-    - batch_train
-    - epoch
-    - categories
+    - src/model/train.py
+    - data/processed/x_data.joblib
+    - data/processed/y_data.joblib
+    - configs/params.yaml
     outs:
-    - datasets/metrics/metrics.json:train.accuracy
-    - datasets/metrics/metrics.json:train.loss
-    - datasets/metrics/metrics.json:eval.accuracy
-    - datasets/metrics/metrics.json:eval.loss
+    - src/model/trained_model.h5
+  predict:
+    cmd: src/model/predict.py
+    deps:
+    - src/model/predict.py
+    - data/processed/x_data.joblib
+    - data/processed/y_data.joblib
+    - src/model/trained_model.h5
+    outs:
+    - data/processed/report.joblib
+  evaluate:
+    cmd: python src/model/evaluate.py
+    deps:
+    - src/model/evaluate.py
+    - data/processed/report.joblib
+    outs:
+    - reports/metrics.json
+
 metrics:
-- datasets/metrics/metrics.json
-plots:
-- datasets/metrics/plots/metrics:
-    x: step
+- reports/metrics.json
+
