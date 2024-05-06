@@ -1,17 +1,15 @@
-#download and unzip data from gdrive.
-#download and unzip data from gdrive.
-import subprocess
+"""This module downloads the dataset from kaggle and stores it in a folder."""
 
+import os
+import kaggle
 
-def get_data_dvc():
-    dvc_command = "dvc pull <data_folder>.dvc"
+# Set the folder path
+FOLDER_PATH = "../data/raw"
 
-    result = subprocess.run(dvc_command, shell=True)
-    if result.returncode != 0:
-        print("Error occurred while pulling data with DVC")
-    else:
-        print("Data pulled successfully with DVC")
+# Create the folder if it doesn't exist
+if not os.path.exists(FOLDER_PATH):
+    os.chmod(".", 0o777)
+    os.makedirs(FOLDER_PATH)
 
-
-if __name__ == "__main__":
-    get_data_dvc()
+# Download the dataset using the Kaggle API
+kaggle.api.dataset_download_files('aravindhannamalai/dl-dataset', path=FOLDER_PATH, unzip=True)
