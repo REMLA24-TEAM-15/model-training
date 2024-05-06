@@ -33,3 +33,7 @@
    ```bash
    dvc pull
    dvc repro
+
+8. **Running Pylint to check the code quality:**
+   ```bash
+   pylint src
