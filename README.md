@@ -35,5 +35,7 @@
    dvc repro
 
 8. **Running Pylint to check the code quality:**
-   ```bash
-   pylint src
+   - **We used dslinter with the [configurations proposed](https://pypi.org/project/dslinter/):**
+     ```bash
+     pylint src
+     ```
