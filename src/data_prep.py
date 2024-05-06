@@ -3,12 +3,16 @@ from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
+import pickle
+import yaml
+
 
 def load_data(file_path):
     data = [line.strip() for line in open(file_path, "r").readlines()]
     x_data = [line.split("\t")[1] for line in data]
     y_data = [line.split("\t")[0] for line in data]
     return x_data, y_data
+
 
 def preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, raw_y_test):
     # Tokenization and Padding
@@ -28,25 +32,32 @@ def preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, 
 
     return x_train, y_train, x_val, y_val, x_test, y_test, char_index
 
-def main():
-    train_file = "train_data.txt"
-    val_file = "val_data.txt"
-    test_file = "test_data.txt"
 
-    # Load data
+def main():
+    with open("params.yaml") as stream:
+        try:
+            params = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+            raise "Could not load params.yaml"
+
+    data_path = params['dataset_dir'] + 'small_dataset/'
+
+    train_file = data_path + "train.txt"
+    val_file = data_path + "val.txt"
+    test_file = data_path + "test.txt"
+
     raw_x_train, raw_y_train = load_data(train_file)
     raw_x_val, raw_y_val = load_data(val_file)
     raw_x_test, raw_y_test = load_data(test_file)
 
-    # Print a portion of the data
-    print("\nSample Data:")
-    print("Training data sample:", raw_x_train[:5])
-    print("Training labels sample:", raw_y_train[:5])
+    out = preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, raw_y_test)
 
-    # Preprocess data
-    x_train, y_train, x_val, y_val, x_test, y_test, char_index = preprocess_data(
-        raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, raw_y_test
-    )
+    with open(data_path + 'processed_data.pkl', 'wb') as f:
+        pickle.dump(out, f)
 
-if __name__ == "__main__":
+    print("Done preprocessing data. Exiting data_prep.py")
+
+
+if __name__ == '__main__':
     main()

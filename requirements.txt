@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:98d2841457b32e4dd4e2710ef07ae1b33b58414644c5060c2459946eb8c8e0ff
-size 124
+scikit-learn
+tensorflow
+numpy
+pandas
+matplotlib
+dvclive
