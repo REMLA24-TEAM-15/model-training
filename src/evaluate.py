@@ -5,10 +5,11 @@ import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
+import json
 
 def main():
     # Load Data
-    test_file = "/kaggle/input/dl-dataset/DL Dataset/test.txt"
+    test_file = "data/raw/DL Dataset/test.txt"
     raw_x_test, raw_y_test = load_data(test_file)
 
     # Preprocess Data
@@ -36,6 +37,12 @@ def main():
     # Plot Confusion Matrix
     sns.heatmap(confusion_mat, annot=True)
     plt.show()
+
+    metrics_dict = {
+        "accuracy": round(accuracy_score(y_test, y_pred_binary), 5)
+    }
+    with open("../../reports/metrics.json", "w", encoding="utf-8") as json_file:
+        json.dump(metrics_dict, json_file, indent=4)
 
 if __name__ == "__main__":
     main()

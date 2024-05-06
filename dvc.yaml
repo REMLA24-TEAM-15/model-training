@@ -3,8 +3,10 @@ stages:
     cmd: python src/get_data.py
     deps:
     - src/get_data.py
-#    outs:
-#    - todo
+    outs:
+    - data/raw/DL Dataset/test.txt
+    - data/raw/DL Dataset/train.txt
+    - data/raw/DL Dataset/val.txt
   data_prep:
     cmd: python src/data_prep.py
     deps:
@@ -34,6 +36,15 @@ stages:
     - datasets/metrics/metrics.json:train.loss
     - datasets/metrics/metrics.json:eval.accuracy
     - datasets/metrics/metrics.json:eval.loss
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - src/evaluate.py
+    - data/raw/DL Dataset/test.txt
+    - phishing_model.h5
+    outs:
+    - reports/metrics.json
+
 metrics:
 - datasets/metrics/metrics.json
 plots:
