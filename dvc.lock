@@ -1,0 +1,40 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python src/get_data.py
+    deps:
+    - path: src/get_data.py
+      hash: md5
+      md5: 44029873f03a99abeeefca1935128875
+      size: 417
+  data_prep:
+    cmd: python src/data_prep.py
+    deps:
+    - path: datasets/small_dataset/test.txt
+      hash: md5
+      md5: a1cab28ad8554fd9269d31e5708469d0
+      size: 32724891
+    - path: datasets/small_dataset/train.txt
+      hash: md5
+      md5: 13fd241a41370119612d5b00b0433009
+      size: 93921671
+    - path: datasets/small_dataset/val.txt
+      hash: md5
+      md5: 7b1e28b1e91582c6f36e85517c3cc6ee
+      size: 46258330
+    - path: params.yaml
+      hash: md5
+      md5: 2a1ba66d8646db0c2368d6083c9f9808
+      size: 244
+    - path: src/data_prep.py
+      hash: md5
+      md5: 52e4c29d14d78d5d7844c18aba2d56b1
+      size: 2165
+    params:
+      params.yaml:
+        dataset_dir: datasets/
+    outs:
+    - path: datasets/small_dataset/processed_data.pkl
+      hash: md5
+      md5: 66ea9f136e1594bc775e04a56e0940a5
+      size: 1555444492
