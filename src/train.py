@@ -3,28 +3,32 @@ train.py
 
 Trains model based on previously loaded data.
 """
-from model import create_model, compile_model
-import yaml
 import pickle
+import yaml
 from dvclive import Live
 from dvclive.keras import DVCLiveCallback
-
+from model import create_model, compile_model
 
 def main():
+    """
+    Trains model with parametres from params.yaml
+    Model is compiled and saved.
+    """
+
     # Model Parameters
-    with open("params.yaml") as stream:
+    with open("params.yaml", encoding="utf-8") as stream:
         try:
             params = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
-            raise "Could not load params.yaml"
+            print("Could not load params.yaml")
 
     # Load Data
     data_path = params['dataset_dir']
     with open(data_path + 'small_dataset/' + 'processed_data.pkl', 'rb') as f:
         data_list = pickle.load(f)
 
-    x_train, y_train, x_val, y_val, x_test, y_test, char_index = data_list
+    x_train, y_train, x_val, y_val, _, _, char_index = data_list
 
     # Create and Compile Model
     voc_size = len(char_index.keys())
@@ -32,7 +36,6 @@ def main():
     model = compile_model(model, params['loss_function'], params['optimizer'])
 
     # Train Model
-    #todo: Remove 10000
     with Live(data_path + 'metrics/', dvcyaml="dvc.yaml") as live:
         model.fit(x_train[:10000], y_train[:10000],
                   batch_size=params['batch_train'],
