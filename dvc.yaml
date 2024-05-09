@@ -4,16 +4,16 @@ stages:
     deps:
     - src/data/get_data.py
     outs:
-    - data/raw/DL Dataset/test.txt
-    - data/raw/DL Dataset/train.txt
-    - data/raw/DL Dataset/val.txt
+    - data/raw_data/DL Dataset/test.txt
+    - data/raw_data/DL Dataset/train.txt
+    - data/raw_data/DL Dataset/val.txt
   data_prep:
     cmd: python src/data/data_prep.py
     deps:
     - src/data/data_prep.py
-    - data/raw/DL Dataset/test.txt
-    - data/raw/DL Dataset/train.txt
-    - data/raw/DL Dataset/val.txt
+    - data/raw_data/DL Dataset/test.txt
+    - data/raw_data/DL Dataset/train.txt
+    - data/raw_data/DL Dataset/val.txt
     outs:
     - data/processed/char_index.joblib
     - data/processed/x_data.joblib
