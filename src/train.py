@@ -38,9 +38,9 @@ def main():
                   validation_data=(x_val[:10000], y_val[:10000]),
                   callbacks=[DVCLiveCallback(live=live)]
                   )
-
-    # Save Model
-    model.save(metrics_path + 'phishing_model.h5')
+        # Save Model
+        model.save(metrics_path + 'phishing_model.h5')
+        live.log_artifact(metrics_path + "phishing_model.h5", type='model')
     print("Trained model saved")
 
 

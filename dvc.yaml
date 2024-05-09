@@ -40,21 +40,20 @@ stages:
     outs:
     - datasets/metrics/phishing_model.h5
   predict:
-    cmd: src/predict.py
+    cmd: python src/predict.py
     deps:
-    - src/model/predict.py
-    - data/processed/x_data.joblib
-    - data/processed/y_data.joblib
-    - src/model/trained_model.h5
+    - src/predict.py
+    - datasets/processed_data/ds_test.joblib
+    - datasets/metrics/phishing_model.h5
     outs:
-    - data/processed/report.joblib
+    - datasets/metrics/predictions.joblib
   evaluate:
-    cmd: python src/model/evaluate.py
+    cmd: python src/evaluate.py
     deps:
-    - src/model/evaluate.py
-    - data/processed/report.joblib
+    - src/evaluate.py
+    - datasets/metrics/predictions.joblib
     outs:
-    - reports/metrics.json
+    - datasets/metrics/statistics.json
 
 metrics:
 - reports/metrics.json
@@ -62,3 +61,7 @@ metrics:
 plots:
 - datasets/metrics/plots/metrics:
     x: step
+artifacts:
+  phishing_model:
+    path: datasets/metrics/phishing_model.h5
+    type: model

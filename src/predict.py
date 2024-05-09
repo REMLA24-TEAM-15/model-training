@@ -3,35 +3,34 @@ import os
 from keras.models import load_model
 import numpy as np
 from joblib import load, dump
+import yaml
+from dvclive import Live
+from dvclive.keras import DVCLiveCallback
 
 
 def predict():
-    """
-    Model prediction
-    """
-    input_folder = "../../data/processed"
+    # Model Parameters
+    with open("params.yaml") as stream:
+        try:
+            params = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+            raise "Could not load params.yaml"
+    data_folder = params['dataset_dir'] + "processed_data/"
+    model_folder = params['dataset_dir'] + "metrics/"
 
-    # check if model and load data exists
-    if not os.path.exists(input_folder):
-        raise FileNotFoundError(f"Input folder '{input_folder}' is empty")
+    # Load data and model
+    x_test, y_test = load(f'{data_folder}ds_test.joblib')
+    model = load_model(model_folder + "phishing_model.h5")
 
-    # Load data
-    x_test = load(f'{input_folder}/x_data.joblib')[2]
-    y_test = load(f'{input_folder}/y_data.joblib')[2]
-
-    model = load_model("trained_model.h5")
-
+    # Make predictions
     y_pred = model.predict(x_test, batch_size=1000)
     y_pred_binary = (np.array(y_pred) > 0.5).astype(int)
     y_test = y_test.reshape(-1, 1)
 
     predictions = {"y_test": y_test, "y_pred_binary": y_pred_binary}
 
-    output_folder = "../../data/processed"
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-
-    dump(predictions, f'{output_folder}/report.joblib')
+    dump(predictions, f'{model_folder}/predictions.joblib')
 
 
 if __name__ == "__main__":
