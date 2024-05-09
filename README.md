@@ -1,4 +1,41 @@
 # REMLA-TEAM-15
 
-Release Engineering for Machine Learning Application Team 15 
+## Installation
 
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/REMLA24-TEAM-15/REMLA-GROUP-15.git
+
+2. **Navigate to the project directory:**
+   ```bash
+   cd REMLA-GROUP-15
+
+3. **Create a virtual environment:**
+   ```bash
+   python -m venv venv
+
+4. **Activate the virtual environment:**
+   - **Windows:**
+     ```bash
+     venv\Scripts\activate
+     ```
+   - **Linux/MacOS:**
+     ```bash
+     source venv/bin/activate
+     ```
+
+
+6. **Install the dependencies from requirements.txt:**
+   ```bash
+   pip install -r requirements.txt
+
+7. **DVC:**
+   ```bash
+   dvc pull
+   dvc repro
+
+8. **Running Pylint to check the code quality:**
+   - **We used dslinter with the [configurations proposed](https://pypi.org/project/dslinter/):**
+     ```bash
+     pylint src
+     ```

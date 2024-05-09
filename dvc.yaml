@@ -54,7 +54,6 @@ stages:
     - datasets/metrics/predictions.joblib
     outs:
     - datasets/metrics/statistics.json
-
 metrics:
 - datasets/metrics/metrics.json
 plots:
