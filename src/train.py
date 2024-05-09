@@ -27,14 +27,13 @@ def main():
     model = compile_model(model, params['loss_function'], params['optimizer'])
 
     # Train Model
-    #todo: Remove 10000
     metrics_path = params['dataset_dir'] + 'metrics/'
     with Live(metrics_path, dvcyaml="dvc.yaml") as live:
-        model.fit(x_train[:10000], y_train[:10000],
+        model.fit(x_train, y_train,
                   batch_size=params['batch_train'],
                   epochs=params['epoch'],
                   shuffle=True,
-                  validation_data=(x_val[:10000], y_val[:10000]),
+                  validation_data=(x_val, y_val),
                   callbacks=[DVCLiveCallback(live=live)]
                   )
         # Save Model
