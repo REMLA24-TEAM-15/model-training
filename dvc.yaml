@@ -56,7 +56,6 @@ stages:
     - datasets/metrics/statistics.json
 
 metrics:
-- reports/metrics.json
 - datasets/metrics/metrics.json
 plots:
 - datasets/metrics/plots/metrics:

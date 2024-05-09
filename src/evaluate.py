@@ -1,6 +1,6 @@
 import json
 import os
-
+import yaml
 from joblib import load
 import seaborn as sns
 from sklearn.metrics import (classification_report,
@@ -10,17 +10,9 @@ from sklearn.metrics import (classification_report,
                              f1_score)
 
 
-def evaluation():
-    """
-    Model evaluation
-    """
-
-    input_folder = "../../data/processed"
-
-    predictions = load(f'{input_folder}/report.joblib')
-
-    y_test = predictions["y_test"]
-    y_pred_binary = predictions["y_pred_binary"]
+def evaluation(preds):
+    y_test = preds["y_test"]
+    y_pred_binary = preds["y_pred_binary"]
 
     # Calculate classification report
     report = classification_report(y_test, y_pred_binary)
@@ -37,12 +29,24 @@ def evaluation():
         "roc_auc": round(roc_auc_score(y_test, y_pred_binary), 5),
         "f1": round(f1_score(y_test, y_pred_binary), 5)
     }
+    return metrics_dict
 
-    output_folder = "../../reports/"
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-    with open(os.path.join(output_folder, "metrics.json"), "w") as f:
-        json.dump(metrics_dict, f)
 
 if __name__ == "__main__":
-    evaluation()
+    # Model Parameters
+    with open("params.yaml") as stream:
+        try:
+            params = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+            raise "Could not load params.yaml"
+    input_folder = params['dataset_dir'] + 'metrics'
+
+    predictions = load(f'{input_folder}/predictions.joblib')
+    metric_dict = evaluation(predictions)
+
+    output_folder = input_folder
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    with open(os.path.join(output_folder, "statistics.json"), "w") as f:
+        json.dump(metric_dict, f)

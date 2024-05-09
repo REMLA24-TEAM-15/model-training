@@ -6,7 +6,6 @@ from dvclive.keras import DVCLiveCallback
 from model import create_model, compile_model
 
 
-
 def main():
     # Model Parameters
     with open("params.yaml") as stream:

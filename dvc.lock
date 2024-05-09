@@ -84,8 +84,8 @@ stages:
       size: 1261
     - path: src/train.py
       hash: md5
-      md5: 215e70b5d07a252e9878368b89cdc243
-      size: 1568
+      md5: ec3aa8b1e2db1b3aac3792ec38a68f2e
+      size: 1567
     params:
       params.yaml:
         batch_train: 1000
@@ -99,14 +99,14 @@ stages:
     outs:
     - path: datasets/metrics/phishing_model.h5
       hash: md5
-      md5: 8e33cc61e75b683350c0ea2303a5a8a1
+      md5: 3964b88a0f8b3cc15f105dc22f94b194
       size: 5483016
   predict:
     cmd: python src/predict.py
     deps:
     - path: datasets/metrics/phishing_model.h5
       hash: md5
-      md5: 8e33cc61e75b683350c0ea2303a5a8a1
+      md5: 3964b88a0f8b3cc15f105dc22f94b194
       size: 5483016
     - path: datasets/processed_data/ds_test.joblib
       hash: md5
@@ -119,5 +119,21 @@ stages:
     outs:
     - path: datasets/metrics/predictions.joblib
       hash: md5
-      md5: 97f1ab0d0336c29826e06fed01dbb501
+      md5: b137d351accbc2c0ac6dcde6161990c7
       size: 5827530
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: datasets/metrics/predictions.joblib
+      hash: md5
+      md5: b137d351accbc2c0ac6dcde6161990c7
+      size: 5827530
+    - path: src/evaluate.py
+      hash: md5
+      md5: cc878d7a36ac7cdc74059af00fdb19fd
+      size: 1672
+    outs:
+    - path: datasets/metrics/statistics.json
+      hash: md5
+      md5: 789a0f481bf654d0b2f57f6a804667eb
+      size: 55
