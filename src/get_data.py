@@ -7,7 +7,7 @@ import yaml
 
 def get_data():
     # Model Parameters
-    with open("configs/params.yaml", encoding="utf-8") as stream:
+    with open("params.yaml", encoding="utf-8") as stream:
         try:
             params = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
