@@ -1,48 +1,52 @@
-# evaluate.py
-from model import create_model
-from data_prep import preprocess_data, load_data
-import numpy as np
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-import seaborn as sns
-import matplotlib.pyplot as plt
 import json
+import os
+import yaml
+from joblib import load
+import seaborn as sns
+from sklearn.metrics import (classification_report,
+                             confusion_matrix,
+                             accuracy_score,
+                             roc_auc_score,
+                             f1_score)
 
-def main():
-    # Load Data
-    test_file = "data/raw/DL Dataset/test.txt"
-    raw_x_test, raw_y_test = load_data(test_file)
 
-    # Preprocess Data
-    x_test, y_test, _ = preprocess_data([], [], [], [], raw_x_test, raw_y_test, char_index)
-
-    # Load Model
-    model = create_model(voc_size=len(char_index.keys()))
-    model.load_weights('phishing_model.h5')
-
-    # Evaluate Model
-    y_pred = model.predict(x_test, batch_size=1000)
-    y_pred_binary = (np.array(y_pred) > 0.5).astype(int)
-    y_test = y_test.reshape(-1, 1)
+def evaluation(preds):
+    y_test = preds["y_test"]
+    y_pred_binary = preds["y_pred_binary"]
 
     # Calculate classification report
     report = classification_report(y_test, y_pred_binary)
-    print('Classification Report:')
-    print(report)
+    print(f"Classification Report: {report}")
 
     # Calculate confusion matrix
     confusion_mat = confusion_matrix(y_test, y_pred_binary)
-    print('Confusion Matrix:', confusion_mat)
-    print('Accuracy:', accuracy_score(y_test, y_pred_binary))
-
-    # Plot Confusion Matrix
+    print(f"Confusion Matrix: {confusion_mat}")
+    print(f"Accuracy: {accuracy_score(y_test, y_pred_binary)}")
     sns.heatmap(confusion_mat, annot=True)
-    plt.show()
 
     metrics_dict = {
-        "accuracy": round(accuracy_score(y_test, y_pred_binary), 5)
+        "accuracy": round(accuracy_score(y_test, y_pred_binary), 5),
+        "roc_auc": round(roc_auc_score(y_test, y_pred_binary), 5),
+        "f1": round(f1_score(y_test, y_pred_binary), 5)
     }
-    with open("../../reports/metrics.json", "w", encoding="utf-8") as json_file:
-        json.dump(metrics_dict, json_file, indent=4)
+    return metrics_dict
+
 
 if __name__ == "__main__":
-    main()
+    # Model Parameters
+    with open("params.yaml") as stream:
+        try:
+            params = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+            raise "Could not load params.yaml"
+    input_folder = params['dataset_dir'] + 'metrics'
+
+    predictions = load(f'{input_folder}/predictions.joblib')
+    metric_dict = evaluation(predictions)
+
+    output_folder = input_folder
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    with open(os.path.join(output_folder, "statistics.json"), "w") as f:
+        json.dump(metric_dict, f)

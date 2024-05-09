@@ -1,50 +1,74 @@
-"""
-Prepares data for further processing.
-"""
-import numpy as np
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-import seaborn as sns
-import matplotlib.pyplot as plt
+# data_preprocessing.py
+
+import os
+import yaml
+from sklearn.preprocessing import LabelEncoder
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.utils import pad_sequences
+from joblib import dump
+
+
+def load_data(file_path):
+    with open(file_path, "r") as file:
+        data = [line.strip() for line in file.readlines()]
+    x_data = [line.split("\t")[1] for line in data]
+    y_data = [line.split("\t")[0] for line in data]
+    return x_data, y_data
+
+
+def preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, raw_y_test):
+    # Tokenization and Padding
+    tokenizer = Tokenizer(lower=True, char_level=True, oov_token='-n-')
+    tokenizer.fit_on_texts(raw_x_train + raw_x_val + raw_x_test)
+    char_index = tokenizer.word_index
+    sequence_length = 200
+    x_train = pad_sequences(tokenizer.texts_to_sequences(raw_x_train), maxlen=sequence_length)
+    x_val = pad_sequences(tokenizer.texts_to_sequences(raw_x_val), maxlen=sequence_length)
+    x_test = pad_sequences(tokenizer.texts_to_sequences(raw_x_test), maxlen=sequence_length)
+
+    # Encoding Labels
+    encoder = LabelEncoder()
+    y_train = encoder.fit_transform(raw_y_train)
+    y_val = encoder.transform(raw_y_val)
+    y_test = encoder.transform(raw_y_test)
+
+    return [x_train, y_train], [x_val, y_val], [x_test, y_test], char_index
 
 from model import create_model
 from data_prep import preprocess_data, load_data
 
 def main():
-    """
-    oads data from a file.
-    Prepares list of labels and list of datapoints.
-    Tokenizes and pads data. Encodes labels.
-    """
-    # Load Data
-    test_file = "/kaggle/input/dl-dataset/DL Dataset/test.txt"
+    with open("params.yaml") as stream:
+        try:
+            params = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+            raise "Could not load params.yaml"
+
+    data_path = params['dataset_dir'] + 'raw_data/DL Dataset/'
+
+    train_file = data_path + "train.txt"
+    val_file = data_path + "val.txt"
+    test_file = data_path + "test.txt"
+
+    raw_x_train, raw_y_train = load_data(train_file)
+    raw_x_val, raw_y_val = load_data(val_file)
     raw_x_test, raw_y_test = load_data(test_file)
-    char_index = None
 
-    # Preprocess Data
-    x_test, y_test, _ = preprocess_data([], [], [], [], raw_x_test, raw_y_test, char_index)
+    ds_train, ds_val, ds_test, char_index = preprocess_data(raw_x_train, raw_y_train,
+                                                            raw_x_val, raw_y_val,
+                                                            raw_x_test, raw_y_test)
 
-    # Load Model
-    model = create_model(voc_size=len(char_index.keys()))
-    model.load_weights('phishing_model.h5')
+    out_path = params['dataset_dir'] + 'processed_data/'
+    if not os.path.exists(out_path):
+        os.makedirs(out_path)
 
-    # Evaluate Model
-    y_pred = model.predict(x_test, batch_size=1000)
-    y_pred_binary = (np.array(y_pred) > 0.5).astype(int)
-    y_test = y_test.reshape(-1, 1)
+    dump(ds_train, f'{out_path}ds_train.joblib')
+    dump(ds_val, f'{out_path}ds_val.joblib')
+    dump(ds_test, f'{out_path}ds_test.joblib')
+    dump(char_index, f'{out_path}char_index.joblib')
 
-    # Calculate classification report
-    report = classification_report(y_test, y_pred_binary)
-    print('Classification Report:')
-    print(report)
-
-    # Calculate confusion matrix
-    confusion_mat = confusion_matrix(y_test, y_pred_binary)
-    print('Confusion Matrix:', confusion_mat)
-    print('Accuracy:', accuracy_score(y_test, y_pred_binary))
-
-    # Plot Confusion Matrix
-    sns.heatmap(confusion_mat, annot=True)
-    plt.show()
+    print("Done preprocessing data. Exiting data_prep.py")
 
 if __name__ == "__main__":
     main()

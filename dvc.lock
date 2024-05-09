@@ -5,36 +5,135 @@ stages:
     deps:
     - path: src/get_data.py
       hash: md5
-      md5: 44029873f03a99abeeefca1935128875
-      size: 417
-  data_prep:
-    cmd: python src/data_prep.py
-    deps:
-    - path: datasets/small_dataset/test.txt
+      md5: 094182c0a6587a183f9e63071f2a777c
+      size: 805
+    outs:
+    - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
       md5: a1cab28ad8554fd9269d31e5708469d0
       size: 32724891
-    - path: datasets/small_dataset/train.txt
+    - path: datasets/raw_data/DL Dataset/train.txt
       hash: md5
       md5: 13fd241a41370119612d5b00b0433009
       size: 93921671
-    - path: datasets/small_dataset/val.txt
+    - path: datasets/raw_data/DL Dataset/val.txt
       hash: md5
       md5: 7b1e28b1e91582c6f36e85517c3cc6ee
       size: 46258330
-    - path: params.yaml
+  data_prep:
+    cmd: python src/data_prep.py
+    deps:
+    - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
-      md5: 2a1ba66d8646db0c2368d6083c9f9808
-      size: 244
+      md5: a1cab28ad8554fd9269d31e5708469d0
+      size: 32724891
+    - path: datasets/raw_data/DL Dataset/train.txt
+      hash: md5
+      md5: 13fd241a41370119612d5b00b0433009
+      size: 93921671
+    - path: datasets/raw_data/DL Dataset/val.txt
+      hash: md5
+      md5: 7b1e28b1e91582c6f36e85517c3cc6ee
+      size: 46258330
     - path: src/data_prep.py
       hash: md5
-      md5: 52e4c29d14d78d5d7844c18aba2d56b1
-      size: 2165
+      md5: e38e72f64063f1a013b324c4004e648a
+      size: 2573
     params:
       params.yaml:
         dataset_dir: datasets/
     outs:
-    - path: datasets/small_dataset/processed_data.pkl
+    - path: datasets/processed_data/char_index.joblib
       hash: md5
-      md5: 66ea9f136e1594bc775e04a56e0940a5
-      size: 1555444492
+      md5: 941dc7e5461b0a429941866a00102b8c
+      size: 444
+    - path: datasets/processed_data/ds_test.joblib
+      hash: md5
+      md5: 982f76e20c9ed96a51f15f90eb71a2eb
+      size: 294273130
+    - path: datasets/processed_data/ds_train.joblib
+      hash: md5
+      md5: b258bbbc3d8e91218ecb16597a2e5daa
+      size: 844986538
+    - path: datasets/processed_data/ds_val.joblib
+      hash: md5
+      md5: f9f5b3b838653f324707343cf0bac606
+      size: 416184978
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: datasets/processed_data/char_index.joblib
+      hash: md5
+      md5: 941dc7e5461b0a429941866a00102b8c
+      size: 444
+    - path: datasets/processed_data/ds_train.joblib
+      hash: md5
+      md5: b258bbbc3d8e91218ecb16597a2e5daa
+      size: 844986538
+    - path: datasets/processed_data/ds_val.joblib
+      hash: md5
+      md5: f9f5b3b838653f324707343cf0bac606
+      size: 416184978
+    - path: params.yaml
+      hash: md5
+      md5: 2a1ba66d8646db0c2368d6083c9f9808
+      size: 244
+    - path: src/model.py
+      hash: md5
+      md5: 296b142bdcf09869672fc77150e48e38
+      size: 1283
+    - path: src/train.py
+      hash: md5
+      md5: ec3aa8b1e2db1b3aac3792ec38a68f2e
+      size: 1567
+    params:
+      params.yaml:
+        batch_train: 1000
+        categories:
+        - phishing
+        - legitimate
+        dataset_dir: datasets/
+        epoch: 5
+        loss_function: binary_crossentropy
+        optimizer: adam
+    outs:
+    - path: datasets/metrics/phishing_model.h5
+      hash: md5
+      md5: d95cea90f152b13c84a248e4cb629947
+      size: 5483016
+  predict:
+    cmd: python src/predict.py
+    deps:
+    - path: datasets/metrics/phishing_model.h5
+      hash: md5
+      md5: d95cea90f152b13c84a248e4cb629947
+      size: 5483016
+    - path: datasets/processed_data/ds_test.joblib
+      hash: md5
+      md5: 982f76e20c9ed96a51f15f90eb71a2eb
+      size: 294273130
+    - path: src/predict.py
+      hash: md5
+      md5: fe6c700dfe494c8ceb4d8d7f260b0fbd
+      size: 1031
+    outs:
+    - path: datasets/metrics/predictions.joblib
+      hash: md5
+      md5: 58993ae4fd2d34d9b219e02bfdc414d7
+      size: 5827530
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: datasets/metrics/predictions.joblib
+      hash: md5
+      md5: 58993ae4fd2d34d9b219e02bfdc414d7
+      size: 5827530
+    - path: src/evaluate.py
+      hash: md5
+      md5: cc878d7a36ac7cdc74059af00fdb19fd
+      size: 1672
+    outs:
+    - path: datasets/metrics/statistics.json
+      hash: md5
+      md5: e4385e4cd1f057797492cacee3067d2f
+      size: 56

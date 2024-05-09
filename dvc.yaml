@@ -4,26 +4,32 @@ stages:
     deps:
     - src/get_data.py
     outs:
-    - data/raw/DL Dataset/test.txt
-    - data/raw/DL Dataset/train.txt
-    - data/raw/DL Dataset/val.txt
+    - datasets/raw_data/DL Dataset/test.txt
+    - datasets/raw_data/DL Dataset/train.txt
+    - datasets/raw_data/DL Dataset/val.txt
   data_prep:
     cmd: python src/data_prep.py
     deps:
     - src/data_prep.py
-    - params.yaml
-    - datasets/small_dataset/train.txt
-    - datasets/small_dataset/test.txt
-    - datasets/small_dataset/val.txt
+    - datasets/raw_data/DL Dataset/test.txt
+    - datasets/raw_data/DL Dataset/train.txt
+    - datasets/raw_data/DL Dataset/val.txt
     params:
     - dataset_dir
     outs:
-    - datasets/small_dataset/processed_data.pkl
+    - datasets/processed_data/ds_train.joblib
+    - datasets/processed_data/ds_val.joblib
+    - datasets/processed_data/ds_test.joblib
+    - datasets/processed_data/char_index.joblib
   train:
     cmd: python src/train.py
     deps:
     - src/train.py
-    - datasets/small_dataset/processed_data.pkl
+    - src/model.py
+    - datasets/processed_data/ds_train.joblib
+    - datasets/processed_data/ds_val.joblib
+    - datasets/processed_data/char_index.joblib
+    - params.yaml
     params:
     - dataset_dir
     - loss_function
@@ -32,21 +38,28 @@ stages:
     - epoch
     - categories
     outs:
-    - datasets/metrics/metrics.json:train.accuracy
-    - datasets/metrics/metrics.json:train.loss
-    - datasets/metrics/metrics.json:eval.accuracy
-    - datasets/metrics/metrics.json:eval.loss
+    - datasets/metrics/phishing_model.h5
+  predict:
+    cmd: python src/predict.py
+    deps:
+    - src/predict.py
+    - datasets/processed_data/ds_test.joblib
+    - datasets/metrics/phishing_model.h5
+    outs:
+    - datasets/metrics/predictions.joblib
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - src/evaluate.py
-    - data/raw/DL Dataset/test.txt
-    - phishing_model.h5
+    - datasets/metrics/predictions.joblib
     outs:
-    - reports/metrics.json
-
+    - datasets/metrics/statistics.json
 metrics:
 - datasets/metrics/metrics.json
 plots:
 - datasets/metrics/plots/metrics:
     x: step
+artifacts:
+  phishing_model:
+    path: datasets/metrics/phishing_model.h5
+    type: model
