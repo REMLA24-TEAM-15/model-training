@@ -41,8 +41,8 @@ def evaluation():
     output_folder = "../../reports/"
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
-    json.dump(metrics_dict, open("../../reports/metrics.json", "w"))
-
+    with open(os.path.join(output_folder, "metrics.json"), "w") as f:
+        json.dump(metrics_dict, f)
 
 if __name__ == "__main__":
     evaluation()
