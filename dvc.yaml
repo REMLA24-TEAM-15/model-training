@@ -15,9 +15,10 @@ stages:
     - data/raw_data/DL Dataset/train.txt
     - data/raw_data/DL Dataset/val.txt
     outs:
-    - data/processed/char_index.joblib
-    - data/processed/x_data.joblib
-    - data/processed/y_data.joblib
+    - data/processed_data/ds_train.joblib
+    - data/processed_data/ds_val.joblib
+    - data/processed_data/ds_test.joblib
+    - data/processed_data/char_index.joblib
   model:
     cmd: python src/model/model.py
     deps:
