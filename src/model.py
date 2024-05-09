@@ -1,11 +1,13 @@
 # model.py
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Embedding, Conv1D, MaxPooling1D, Flatten
+
 """
 Configures training model parametres.
 """
 from keras.models import Sequential
 from keras.layers import Embedding, Conv1D, MaxPooling1D, Flatten, Dense, Dropout
+
 
 def create_model(voc_size, categories):
     """

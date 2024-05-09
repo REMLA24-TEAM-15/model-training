@@ -26,5 +26,6 @@ def get_data():
     # Download the dataset using the Kaggle API
     kaggle.api.dataset_download_files('aravindhannamalai/dl-dataset', path=folder_path, unzip=True)
 
+
 if __name__ == '__main__':
     get_data()

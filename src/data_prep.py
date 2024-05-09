@@ -34,8 +34,10 @@ def preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, 
 
     return [x_train, y_train], [x_val, y_val], [x_test, y_test], char_index
 
+
 from model import create_model
 from data_prep import preprocess_data, load_data
+
 
 def main():
     with open("params.yaml") as stream:
@@ -69,6 +71,7 @@ def main():
     dump(char_index, f'{out_path}char_index.joblib')
 
     print("Done preprocessing data. Exiting data_prep.py")
+
 
 if __name__ == "__main__":
     main()
