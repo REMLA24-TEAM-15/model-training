@@ -5,36 +5,99 @@ stages:
     deps:
     - path: src/get_data.py
       hash: md5
-      md5: 44029873f03a99abeeefca1935128875
-      size: 417
-  data_prep:
-    cmd: python src/data_prep.py
-    deps:
-    - path: datasets/small_dataset/test.txt
+      md5: a9f137b144196492f88720fd68022ad2
+      size: 806
+    outs:
+    - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
       md5: a1cab28ad8554fd9269d31e5708469d0
       size: 32724891
-    - path: datasets/small_dataset/train.txt
+    - path: datasets/raw_data/DL Dataset/train.txt
       hash: md5
       md5: 13fd241a41370119612d5b00b0433009
       size: 93921671
-    - path: datasets/small_dataset/val.txt
+    - path: datasets/raw_data/DL Dataset/val.txt
       hash: md5
       md5: 7b1e28b1e91582c6f36e85517c3cc6ee
       size: 46258330
-    - path: params.yaml
+  data_prep:
+    cmd: python src/data_prep.py
+    deps:
+    - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
-      md5: 2a1ba66d8646db0c2368d6083c9f9808
-      size: 244
+      md5: a1cab28ad8554fd9269d31e5708469d0
+      size: 32724891
+    - path: datasets/raw_data/DL Dataset/train.txt
+      hash: md5
+      md5: 13fd241a41370119612d5b00b0433009
+      size: 93921671
+    - path: datasets/raw_data/DL Dataset/val.txt
+      hash: md5
+      md5: 7b1e28b1e91582c6f36e85517c3cc6ee
+      size: 46258330
     - path: src/data_prep.py
       hash: md5
-      md5: 52e4c29d14d78d5d7844c18aba2d56b1
-      size: 2165
+      md5: a2eabf58f1b4eb5c63f3d35ef49fd183
+      size: 2476
     params:
       params.yaml:
         dataset_dir: datasets/
     outs:
-    - path: datasets/small_dataset/processed_data.pkl
+    - path: datasets/processed_data/char_index.joblib
       hash: md5
-      md5: 66ea9f136e1594bc775e04a56e0940a5
-      size: 1555444492
+      md5: 941dc7e5461b0a429941866a00102b8c
+      size: 444
+    - path: datasets/processed_data/ds_test.joblib
+      hash: md5
+      md5: 982f76e20c9ed96a51f15f90eb71a2eb
+      size: 294273130
+    - path: datasets/processed_data/ds_train.joblib
+      hash: md5
+      md5: b258bbbc3d8e91218ecb16597a2e5daa
+      size: 844986538
+    - path: datasets/processed_data/ds_val.joblib
+      hash: md5
+      md5: f9f5b3b838653f324707343cf0bac606
+      size: 416184978
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: datasets/processed_data/char_index.joblib
+      hash: md5
+      md5: 941dc7e5461b0a429941866a00102b8c
+      size: 444
+    - path: datasets/processed_data/ds_train.joblib
+      hash: md5
+      md5: b258bbbc3d8e91218ecb16597a2e5daa
+      size: 844986538
+    - path: datasets/processed_data/ds_val.joblib
+      hash: md5
+      md5: f9f5b3b838653f324707343cf0bac606
+      size: 416184978
+    - path: params.yaml
+      hash: md5
+      md5: 2a1ba66d8646db0c2368d6083c9f9808
+      size: 244
+    - path: src/model.py
+      hash: md5
+      md5: fa3e5c0efc33949be2702923b5fd9469
+      size: 1260
+    - path: src/train.py
+      hash: md5
+      md5: fffe75dd49f76e5d99feb1c6cc104f05
+      size: 1484
+    params:
+      params.yaml:
+        batch_train: 1000
+        categories:
+        - phishing
+        - legitimate
+        dataset_dir: datasets/
+        epoch: 5
+        loss_function: binary_crossentropy
+        optimizer: adam
+    outs:
+    - path: datasets/metrics/phishing_model.h5
+      hash: md5
+      md5: f3838c9bc2e53b97a50168aba120ebdd
+      size: 5483016

@@ -1,42 +1,47 @@
-
-from keras.models import load_model
+# train.py
+from model import create_model, compile_model
 import yaml
 from joblib import load
+from dvclive import Live
+from dvclive.keras import DVCLiveCallback
 
-def train_model():
-    """
-    Train model
-    """
-    input_folder = "../../data/processed"
-    model = load_model("model.h5")
-    with open("../../configs/params.yaml", "r", encoding="utf-8") as file:
-        params = yaml.safe_load(file)
 
-    x = load(f'{input_folder}/x_data.joblib')
-    y = load(f'{input_folder}/y_data.joblib')
+def main():
+    # Model Parameters
+    with open("params.yaml") as stream:
+        try:
+            params = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+            raise "Could not load params.yaml"
 
-    x_train = x[0]
-    y_train = y[0]
-    x_val = x[1]
-    y_val = y[1]
+    # Load Data
+    input_folder = params["dataset_dir"] + 'processed_data/'
+    x_train, y_train = load(input_folder + 'ds_train.joblib')
+    x_val, y_val = load(input_folder + 'ds_val.joblib')
+    char_index = load(input_folder + 'char_index.joblib')
 
-    model.compile(
-        loss=params["loss_function"],
-        optimizer=params["optimizer"],
-        metrics=["accuracy"],
-    )
+    # Create and Compile Model
+    voc_size = len(char_index.keys())
+    model = create_model(voc_size, len(params['categories']))
+    model = compile_model(model, params['loss_function'], params['optimizer'])
 
-    model.fit(
-        x_train,
-        y_train,
-        batch_size=params["batch_train"],
-        epochs=params["epoch"],
-        shuffle=True,
-        validation_data=(x_val, y_val),
-    )
+    # Train Model
+    #todo: Remove 10000
+    metrics_path = params['dataset_dir'] + 'metrics/'
+    with Live(metrics_path, dvcyaml="dvc.yaml") as live:
+        model.fit(x_train[:10000], y_train[:10000],
+                  batch_size=params['batch_train'],
+                  epochs=params['epoch'],
+                  shuffle=True,
+                  validation_data=(x_val[:10000], y_val[:10000]),
+                  callbacks=[DVCLiveCallback(live=live)]
+                  )
 
-    model.save("trained_model.h5")
+    # Save Model
+    model.save(metrics_path + 'phishing_model.h5')
+    print("Trained model saved")
 
 
 if __name__ == "__main__":
-    train_model()
+    main()

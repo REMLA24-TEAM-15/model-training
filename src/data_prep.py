@@ -36,7 +36,7 @@ def preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, 
 
 
 def main():
-    with open("configs/params.yaml") as stream:
+    with open("params.yaml") as stream:
         try:
             params = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
