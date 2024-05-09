@@ -1,16 +1,16 @@
 # data_preprocessing.py
+
+import os
+import yaml
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-import numpy as np
-import pickle
-import yaml
-import os
 from joblib import dump
 
 
 def load_data(file_path):
-    data = [line.strip() for line in open(file_path, "r").readlines()]
+    with open(file_path, "r") as file:
+        data = [line.strip() for line in file.readlines()]
     x_data = [line.split("\t")[1] for line in data]
     y_data = [line.split("\t")[0] for line in data]
     return x_data, y_data
@@ -53,7 +53,9 @@ def main():
     raw_x_val, raw_y_val = load_data(val_file)
     raw_x_test, raw_y_test = load_data(test_file)
 
-    ds_train, ds_val, ds_test, char_index = preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, raw_y_test)
+    ds_train, ds_val, ds_test, char_index = preprocess_data(raw_x_train, raw_y_train,
+                                                            raw_x_val, raw_y_val,
+                                                            raw_x_test, raw_y_test)
 
     out_path = params['dataset_dir'] + 'processed_data/'
     if not os.path.exists(out_path):
@@ -66,6 +68,5 @@ def main():
 
     print("Done preprocessing data. Exiting data_prep.py")
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

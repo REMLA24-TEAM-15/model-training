@@ -18,9 +18,9 @@ flasgger
 
 pylint==3.1.0
 
-tensorflow==2.16.1
+tensorflow
 tensorrt==10.0.1
-keras==3.3.3
+keras==3.1.1
 seaborn==0.13.2
 joblib~=1.4.2
 PyYAML~=6.0.1
