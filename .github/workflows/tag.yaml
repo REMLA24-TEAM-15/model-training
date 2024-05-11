@@ -1,0 +1,52 @@
+#tag.yaml
+---
+name: Create TAG
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  check-tag:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ''
+      IS_NEW: 'false'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Retrieve tag from setup.py
+        run: |
+          TAG=$(grep 'version' params.yaml | awk '{print $2}')
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Check for Tag
+        run: |
+          if git show-ref --tags --verify --quiet "refs/tags/v${TAG}"; then
+            echo "IS_NEW=false" >> $GITHUB_ENV
+            echo "Tag v${TAG} exists"
+          else
+            echo "IS_NEW=true" >> $GITHUB_ENV
+            echo "Tag v${TAG} does not exist"
+          fi
+
+      - name: Create Tag
+        uses: actions/github-script@v5
+        if: env.IS_NEW == 'true'
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/v${{ env.TAG }}',
+              sha: context.sha
+            })
