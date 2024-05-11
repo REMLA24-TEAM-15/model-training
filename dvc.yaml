@@ -54,12 +54,12 @@ stages:
     - datasets/metrics/predictions.joblib
     outs:
     - datasets/metrics/statistics.json
-metrics:
-- datasets/metrics/metrics.json
-plots:
-- datasets/metrics/plots/metrics:
-    x: step
-artifacts:
-  phishing_model:
-    path: datasets/metrics/phishing_model.h5
-    type: model
+  release:
+    cmd: python src/release.py
+    deps:
+    - datasets/processed_data/char_index.joblib
+    - datasets/metrics/phishing_model.h5
+    params:
+    - version
+    outs:
+    - release.joblib
