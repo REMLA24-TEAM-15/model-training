@@ -1,9 +1,9 @@
 schema: '2.0'
 stages:
   get_data:
-    cmd: python src/get_data.py
+    cmd: python src/Data/get_data.py
     deps:
-    - path: src/get_data.py
+    - path: src/Data/get_data.py
       hash: md5
       md5: e9694d2e4b40d50bd4c48b1460c2cc8e
       size: 811
@@ -21,7 +21,7 @@ stages:
       md5: 7b1e28b1e91582c6f36e85517c3cc6ee
       size: 46258330
   data_prep:
-    cmd: python src/data_prep.py
+    cmd: python src/Data/data_prep.py
     deps:
     - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
@@ -35,7 +35,7 @@ stages:
       hash: md5
       md5: 7b1e28b1e91582c6f36e85517c3cc6ee
       size: 46258330
-    - path: src/data_prep.py
+    - path: src/Data/data_prep.py
       hash: md5
       md5: 199bac49634c4cc664b4696a2620391f
       size: 2656
@@ -60,7 +60,7 @@ stages:
       md5: f9f5b3b838653f324707343cf0bac606
       size: 416184978
   train:
-    cmd: python src/train.py
+    cmd: python src/Models/train.py
     deps:
     - path: datasets/processed_data/char_index.joblib
       hash: md5
@@ -78,11 +78,11 @@ stages:
       hash: md5
       md5: 2a1ba66d8646db0c2368d6083c9f9808
       size: 244
-    - path: src/model.py
+    - path: src/Models/model.py
       hash: md5
       md5: 296b142bdcf09869672fc77150e48e38
       size: 1283
-    - path: src/train.py
+    - path: src/Models/train.py
       hash: md5
       md5: ec3aa8b1e2db1b3aac3792ec38a68f2e
       size: 1567
@@ -102,7 +102,7 @@ stages:
       md5: d95cea90f152b13c84a248e4cb629947
       size: 5483016
   predict:
-    cmd: python src/predict.py
+    cmd: python src/Models/predict.py
     deps:
     - path: datasets/metrics/phishing_model.h5
       hash: md5
@@ -112,7 +112,7 @@ stages:
       hash: md5
       md5: 982f76e20c9ed96a51f15f90eb71a2eb
       size: 294273130
-    - path: src/predict.py
+    - path: src/Models/predict.py
       hash: md5
       md5: fe6c700dfe494c8ceb4d8d7f260b0fbd
       size: 1031
@@ -122,13 +122,13 @@ stages:
       md5: 58993ae4fd2d34d9b219e02bfdc414d7
       size: 5827530
   evaluate:
-    cmd: python src/evaluate.py
+    cmd: python src/Models/evaluate.py
     deps:
     - path: datasets/metrics/predictions.joblib
       hash: md5
       md5: 58993ae4fd2d34d9b219e02bfdc414d7
       size: 5827530
-    - path: src/evaluate.py
+    - path: src/Models/evaluate.py
       hash: md5
       md5: cc878d7a36ac7cdc74059af00fdb19fd
       size: 1672
