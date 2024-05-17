@@ -20,7 +20,7 @@ def get_data():
 
     # Create the folder if it doesn't exist
     if not os.path.exists(folder_path):
-        os.chmod("..", 0o777)
+        os.chmod("../..", 0o777)
         os.makedirs(folder_path)
 
     # Download the dataset using the Kaggle API
