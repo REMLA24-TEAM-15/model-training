@@ -8,7 +8,7 @@ stages:
     - datasets/raw_data/DL Dataset/train.txt
     - datasets/raw_data/DL Dataset/val.txt
   data_prep:
-    cmd: python src/data_prep.py
+    cmd: python src/Data/data_prep.py
     deps:
     - src/Data/data_prep.py
     - datasets/raw_data/DL Dataset/test.txt
