@@ -61,5 +61,12 @@ stages:
     - datasets/metrics/phishing_model.h5
     params:
     - version
-    outs:
-    - release.joblib
+metrics:
+- datasets/metrics/metrics.json
+plots:
+- datasets/metrics/plots/metrics:
+    x: step
+artifacts:
+  phishing_model:
+    path: datasets/metrics/phishing_model.h5
+    type: model
