@@ -479,7 +479,8 @@ disable=raw-checker-failed,
         too-many-arguments,
         too-many-locals,
         raising-bad-type,
-        import-error
+        import-error,
+        no-name-in-module
 
 
 # Enable the message, report, category or checker with the given id(s). You can

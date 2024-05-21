@@ -1,15 +1,10 @@
-import yaml
 from joblib import load, dump
 from tensorflow.keras.models import load_model
+from src.models.load_parameters import load_params
 
 if __name__ == '__main__':
     # Model Parameters
-    with open("params.yaml") as stream:
-        try:
-            params = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-            raise "Could not load params.yaml"
+    params = load_params()
 
     input_folder = params["dataset_dir"] + 'processed_data/'
     char_index = load(input_folder + 'char_index.joblib')

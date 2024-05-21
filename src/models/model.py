@@ -1,7 +1,3 @@
-# model.py
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Embedding, Conv1D, MaxPooling1D, Flatten
-
 """
 Configures training model parametres.
 """

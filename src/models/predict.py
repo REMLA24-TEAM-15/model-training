@@ -1,21 +1,12 @@
-import os
-
 from tensorflow.keras.models import load_model
 import numpy as np
 from joblib import load, dump
-import yaml
-from dvclive import Live
-from dvclive.keras import DVCLiveCallback
+from load_parameters import load_params
 
 
 def predict():
     # Model Parameters
-    with open("params.yaml") as stream:
-        try:
-            params = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-            raise "Could not load params.yaml"
+    params = load_params()
     data_folder = params['dataset_dir'] + "processed_data/"
     model_folder = params['dataset_dir'] + "metrics/"
 
