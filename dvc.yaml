@@ -1,16 +1,16 @@
 stages:
   get_data:
-    cmd: python src/get_data.py
+    cmd: python src/data/get_data.py
     deps:
-    - src/get_data.py
+    - src/data/get_data.py
     outs:
     - datasets/raw_data/DL Dataset/test.txt
     - datasets/raw_data/DL Dataset/train.txt
     - datasets/raw_data/DL Dataset/val.txt
   data_prep:
-    cmd: python src/data_prep.py
+    cmd: python src/data/data_prep.py
     deps:
-    - src/data_prep.py
+    - src/data/data_prep.py
     - datasets/raw_data/DL Dataset/test.txt
     - datasets/raw_data/DL Dataset/train.txt
     - datasets/raw_data/DL Dataset/val.txt
@@ -22,10 +22,10 @@ stages:
     - datasets/processed_data/ds_test.joblib
     - datasets/processed_data/char_index.joblib
   train:
-    cmd: python src/train.py
+    cmd: python src/models/train.py
     deps:
-    - src/train.py
-    - src/model.py
+    - src/models/train.py
+    - src/models/model.py
     - datasets/processed_data/ds_train.joblib
     - datasets/processed_data/ds_val.joblib
     - datasets/processed_data/char_index.joblib
@@ -40,17 +40,17 @@ stages:
     outs:
     - datasets/metrics/phishing_model.h5
   predict:
-    cmd: python src/predict.py
+    cmd: python src/models/predict.py
     deps:
-    - src/predict.py
+    - src/models/predict.py
     - datasets/processed_data/ds_test.joblib
     - datasets/metrics/phishing_model.h5
     outs:
     - datasets/metrics/predictions.joblib
   evaluate:
-    cmd: python src/evaluate.py
+    cmd: python src/models/evaluate.py
     deps:
-    - src/evaluate.py
+    - src/models/evaluate.py
     - datasets/metrics/predictions.joblib
     outs:
     - datasets/metrics/statistics.json

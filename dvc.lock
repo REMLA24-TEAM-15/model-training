@@ -79,12 +79,12 @@ stages:
       md5: 5a6d59d752ed02ec5edf851ba4ac95e2
       size: 56
   get_data:
-    cmd: python src/get_data.py
+    cmd: python src/data/get_data.py
     deps:
-    - path: src/get_data.py
+    - path: src/data/get_data.py
       hash: md5
-      md5: e9694d2e4b40d50bd4c48b1460c2cc8e
-      size: 811
+      md5: e7a2fabd64c285ffe3e1594a9ce802c0
+      size: 845
     outs:
     - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
@@ -99,7 +99,7 @@ stages:
       md5: 7b1e28b1e91582c6f36e85517c3cc6ee
       size: 46258330
   data_prep:
-    cmd: python src/data_prep.py
+    cmd: python src/data/data_prep.py
     deps:
     - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
@@ -113,10 +113,10 @@ stages:
       hash: md5
       md5: 7b1e28b1e91582c6f36e85517c3cc6ee
       size: 46258330
-    - path: src/data_prep.py
+    - path: src/data/data_prep.py
       hash: md5
-      md5: 199bac49634c4cc664b4696a2620391f
-      size: 2656
+      md5: 3311ba7242f7962d8f47b4c89a19f0a2
+      size: 2620
     params:
       params.yaml:
         dataset_dir: datasets/
@@ -127,16 +127,16 @@ stages:
       size: 444
     - path: datasets/processed_data/ds_test.joblib
       hash: md5
-      md5: 982f76e20c9ed96a51f15f90eb71a2eb
-      size: 294273130
+      md5: aa588736dd32d491eecdbdeae8680a8d
+      size: 292816302
     - path: datasets/processed_data/ds_train.joblib
       hash: md5
       md5: b258bbbc3d8e91218ecb16597a2e5daa
       size: 844986538
     - path: datasets/processed_data/ds_val.joblib
       hash: md5
-      md5: f9f5b3b838653f324707343cf0bac606
-      size: 416184978
+      md5: 6cbd4c903db06dd435a42943f8ca6d33
+      size: 414124626
   release:
     cmd: python src/release.py
     deps:

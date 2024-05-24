@@ -1,6 +1,5 @@
 import json
 import os
-import yaml
 from joblib import load
 import seaborn as sns
 from sklearn.metrics import (classification_report,
@@ -8,6 +7,7 @@ from sklearn.metrics import (classification_report,
                              accuracy_score,
                              roc_auc_score,
                              f1_score)
+from load_parameters import load_params
 
 
 def evaluation(preds):
@@ -34,12 +34,7 @@ def evaluation(preds):
 
 if __name__ == "__main__":
     # Model Parameters
-    with open("params.yaml") as stream:
-        try:
-            params = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-            raise "Could not load params.yaml"
+    params = load_params()
     input_folder = params['dataset_dir'] + 'metrics'
 
     predictions = load(f'{input_folder}/predictions.joblib')

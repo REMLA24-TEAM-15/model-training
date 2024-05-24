@@ -1,22 +1,16 @@
-# train.py
-import yaml
 from joblib import load
 
 from dvclive import Live
 from dvclive.keras import DVCLiveCallback
 from model import create_model, compile_model
+from load_parameters import load_params
 
 
 def main():
     # Model Parameters
-    with open("params.yaml") as stream:
-        try:
-            params = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-            raise "Could not load params.yaml"
+    params = load_params()
 
-    # Load Data
+    # Load data
     input_folder = params["dataset_dir"] + 'processed_data/'
     x_train, y_train = load(input_folder + 'ds_train.joblib')
     x_val, y_val = load(input_folder + 'ds_val.joblib')
