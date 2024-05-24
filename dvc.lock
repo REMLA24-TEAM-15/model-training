@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/Data/get_data.py
       hash: md5
-      md5: e9694d2e4b40d50bd4c48b1460c2cc8e
-      size: 811
+      md5: e7a2fabd64c285ffe3e1594a9ce802c0
+      size: 845
     outs:
     - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
