@@ -43,5 +43,5 @@
 9. **Running flake8 to check the code quality:**
    - **If it does not return anything, the code quality is good:**
      ```bash
-     venv\Scripts\activate
+     flake8 src
      ```
