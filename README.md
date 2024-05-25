@@ -37,8 +37,8 @@
    dvc repro
 
 8. **Running Pylint to check the code quality:**
-  ```bash
-  pylint src
+   ```bash
+   pylint src
   
 9. **Running flake8 to check the code quality:**
    - **If it does not return anything, the code quality is good:**
