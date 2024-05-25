@@ -5,6 +5,7 @@ from tensorflow.keras.utils import pad_sequences
 from joblib import dump
 import yaml
 
+
 def load_data(file_path):
     with open(file_path, "r") as file:
         data = [line.strip() for line in file.readlines()]
