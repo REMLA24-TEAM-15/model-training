@@ -8,12 +8,12 @@ import yaml
 
 def get_data():
     # Model Parameters
-    with open("params.yaml", encoding="utf-8") as stream:
+    with open("params.yaml") as stream:
         try:
             params = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
-            print("Could not load params.yaml")
+            raise "Could not load params.yaml"
 
     # Set the folder path
     folder_path = params['dataset_dir'] + "raw_data/"
