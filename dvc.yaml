@@ -1,6 +1,6 @@
 stages:
   get_data:
-    cmd: python src/data/get_data.py
+    cmd: python -m src.data.get_data
     deps:
     - src/data/get_data.py
     outs:
@@ -8,7 +8,7 @@ stages:
     - datasets/raw_data/DL Dataset/train.txt
     - datasets/raw_data/DL Dataset/val.txt
   data_prep:
-    cmd: python src/data/data_prep.py
+    cmd: python -m src.data.data_prep
     deps:
     - src/data/data_prep.py
     - datasets/raw_data/DL Dataset/test.txt

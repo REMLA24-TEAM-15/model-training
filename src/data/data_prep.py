@@ -3,7 +3,7 @@ from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.utils import pad_sequences
 from joblib import dump
-import yaml
+from ..models.load_parameters import load_params
 
 
 def load_data(file_path):
@@ -35,12 +35,7 @@ def preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, 
 
 def main():
     # Model Parameters
-    with open("params.yaml") as stream:
-        try:
-            params = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-            raise "Could not load params.yaml"
+    params = load_params()
 
     data_path = params['dataset_dir'] + 'raw_data/DL Dataset/'
 
