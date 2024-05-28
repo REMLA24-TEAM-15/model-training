@@ -3,17 +3,12 @@ This module downloads the dataset from kaggle and stores it in the data folder.
 """
 import os
 import kaggle
-import yaml
+from ..models.load_parameters import load_params
 
 
 def get_data():
     # Model Parameters
-    with open("params.yaml") as stream:
-        try:
-            params = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-            raise "Could not load params.yaml"
+    params = load_params()
 
     # Set the folder path
     folder_path = params['dataset_dir'] + "raw_data/"

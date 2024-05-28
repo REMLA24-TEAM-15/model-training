@@ -79,12 +79,12 @@ stages:
       md5: 754b4ddbcf16a655e1bc8d2b37e50982
       size: 56
   get_data:
-    cmd: python src/data/get_data.py
+    cmd: python -m src.data.get_data
     deps:
     - path: src/data/get_data.py
       hash: md5
-      md5: fe640af2ed6291a291da8535a4ae6589
-      size: 826
+      md5: f2787b4fc28ef9c862539d22d267038f
+      size: 680
     outs:
     - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
@@ -99,7 +99,7 @@ stages:
       md5: 7b1e28b1e91582c6f36e85517c3cc6ee
       size: 46258330
   data_prep:
-    cmd: python src/data/data_prep.py
+    cmd: python -m src.data.data_prep
     deps:
     - path: datasets/raw_data/DL Dataset/test.txt
       hash: md5
@@ -115,8 +115,8 @@ stages:
       size: 46258330
     - path: src/data/data_prep.py
       hash: md5
-      md5: 55fd255b9a4759174e48df0435e74dd1
-      size: 2642
+      md5: 6b4fdc134aa774cf64d49d5281751b90
+      size: 2498
     params:
       params.yaml:
         dataset_dir: datasets/
