@@ -1,6 +1,4 @@
 # REMLA-TEAM-15
-## Todo:
-• Include the execution of the two linters in a Github workflow that can fail the build.
 
 ## Installation
 
