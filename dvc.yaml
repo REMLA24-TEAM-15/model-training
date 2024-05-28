@@ -65,7 +65,13 @@ metrics:
 - datasets/metrics/metrics.json
 - datasets/metrics/metrics.json
 - datasets/metrics/metrics.json
+- datasets/metrics/metrics.json
+- datasets/metrics/metrics.json
 plots:
+- datasets/metrics/plots/metrics:
+    x: step
+- datasets/metrics/plots/metrics:
+    x: step
 - datasets/metrics/plots/metrics:
     x: step
 - datasets/metrics/plots/metrics:
