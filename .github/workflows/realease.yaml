@@ -37,3 +37,31 @@ jobs:
           asset_path: ./release.joblib
           asset_name: release.joblib
           asset_content_type: application/octet-stream
+
+  deploy-docs:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install --no-root
+
+      - name: Install libml
+        run: poetry run pip install -i https://test.pypi.org/simple/ libml-URLPhishing==0.2.1 --no-deps
+
+      - name: Install pdoc
+        run: poetry run pip install pdoc3
+
+      - name: Generate Docs
+        run: |
+          poetry run pdoc src --html --force --output-dir docs
+
+      - name: Deploy Docs to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./docs/src
