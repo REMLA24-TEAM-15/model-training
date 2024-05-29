@@ -6,4 +6,7 @@ __pycache__/
 *.pptx
 *.html
 venv
-
+/metrics
+/plots
+models/*
+/modelsphishing_model.h5

@@ -1,7 +1,7 @@
 schema: '2.0'
 stages:
   train:
-    cmd: python src/models/train.py
+    cmd: python -m src.models.train
     deps:
     - path: datasets/processed_data/char_index.joblib
       hash: md5
@@ -17,16 +17,16 @@ stages:
       size: 414124626
     - path: params.yaml
       hash: md5
-      md5: 6e36a4520f788420f6117c043c413056
-      size: 271
+      md5: d6cffa7303946c840816dde6a37e1f9c
+      size: 325
     - path: src/models/model.py
       hash: md5
       md5: 024dac09754b0d1d640306fef94e95e3
       size: 1557
     - path: src/models/train.py
       hash: md5
-      md5: 820e2077e3abf513e878cefd62a301d4
-      size: 1392
+      md5: 497746b192a50b39c9508b7e31556f66
+      size: 1376
     params:
       params.yaml:
         batch_train: 5000
@@ -38,9 +38,9 @@ stages:
         loss_function: binary_crossentropy
         optimizer: adam
     outs:
-    - path: datasets/metrics/phishing_model.h5
+    - path: models/phishing_model.h5
       hash: md5
-      md5: 80f8cc17c542e2f4a7d79ac02d45f7c6
+      md5: de4a2c3bc48f9a12edd1b58cd35e7d5e
       size: 5483016
   predict:
     cmd: python src/models/predict.py
