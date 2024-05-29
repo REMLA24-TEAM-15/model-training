@@ -44,14 +44,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Add kaggle.json
+        run: echo "${{ secrets.KAGGLE_JSON }}" > /home/runner/.kaggle/kaggle.json
+
       - name: Install poetry
         run: pip install poetry
 
       - name: Install dependencies
         run: poetry install --no-root
-
-      - name: Install libml
-        run: poetry run pip install -i https://test.pypi.org/simple/ libml-URLPhishing==0.2.1 --no-deps
 
       - name: Install pdoc
         run: poetry run pip install pdoc3
