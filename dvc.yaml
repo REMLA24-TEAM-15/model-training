@@ -22,7 +22,7 @@ stages:
     - datasets/processed_data/ds_test.joblib
     - datasets/processed_data/char_index.joblib
   train:
-    cmd: python src/models/train.py
+    cmd: python -m src.models.train
     deps:
     - src/models/train.py
     - src/models/model.py
@@ -38,47 +38,53 @@ stages:
     - epoch
     - categories
     outs:
-    - datasets/metrics/phishing_model.h5
+    - models/phishing_model.h5
   predict:
-    cmd: python src/models/predict.py
+    cmd: python -m src.models.predict
     deps:
     - src/models/predict.py
     - datasets/processed_data/ds_test.joblib
-    - datasets/metrics/phishing_model.h5
+    - models/phishing_model.h5
     outs:
-    - datasets/metrics/predictions.joblib
+    - models/predictions.joblib
   evaluate:
-    cmd: python src/models/evaluate.py
+    cmd: python -m src.models.evaluate
     deps:
     - src/models/evaluate.py
-    - datasets/metrics/predictions.joblib
+    - models/predictions.joblib
     outs:
-    - datasets/metrics/statistics.json
+    - reports/metrics/statistics.json
   release:
     cmd: python src/release.py
     deps:
     - datasets/processed_data/char_index.joblib
-    - datasets/metrics/phishing_model.h5
+    - models/phishing_model.h5
     params:
     - version
 metrics:
-- datasets/metrics/metrics.json
-- datasets/metrics/metrics.json
-- datasets/metrics/metrics.json
-- datasets/metrics/metrics.json
-- datasets/metrics/metrics.json
+- reports/metrics/metrics.json
+- reports/metrics/metrics.json
+- reports/metrics/metrics.json
+- reports/metrics/metrics.json
+- reports/metrics/metrics.json
+- models/metrics.json
 plots:
-- datasets/metrics/plots/metrics:
+- reports/plots/metrics:
     x: step
-- datasets/metrics/plots/metrics:
+- reports/plots/metrics:
     x: step
-- datasets/metrics/plots/metrics:
+- reports/plots/metrics:
     x: step
-- datasets/metrics/plots/metrics:
+- reports/plots/metrics:
     x: step
-- datasets/metrics/plots/metrics:
+- reports/plots/metrics:
+    x: step
+- models/plots/metrics:
     x: step
 artifacts:
+  modelsphishing_model:
+    path: modelsphishing_model.h5
+    type: model
   phishing_model:
-    path: datasets/metrics/phishing_model.h5
+    path: models/phishing_model.h5
     type: model

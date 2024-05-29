@@ -1,14 +1,14 @@
 from tensorflow.keras.models import load_model
 import numpy as np
 from joblib import load, dump
-from load_parameters import load_params
+from .load_parameters import load_params
 
 
 def predict():
     # Model Parameters
     params = load_params()
     data_folder = params['dataset_dir'] + "processed_data/"
-    model_folder = params['dataset_dir'] + "metrics/"
+    model_folder = params['models_dir']
 
     # Load data and model
     x_test, y_test = load(f'{data_folder}ds_test.joblib')

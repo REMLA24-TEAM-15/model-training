@@ -2,8 +2,8 @@ from joblib import load
 
 from dvclive import Live
 from dvclive.keras import DVCLiveCallback
-from model import create_model, compile_model
-from load_parameters import load_params
+from .model import create_model, compile_model
+from .load_parameters import load_params
 
 
 def main():
@@ -22,8 +22,8 @@ def main():
     model = compile_model(model, params['loss_function'], params['optimizer'])
 
     # Train Model
-    metrics_path = params['dataset_dir'] + 'metrics/'
-    with Live(metrics_path, dvcyaml="dvc.yaml") as live:
+    models_path = params['models_dir']
+    with Live(models_path, dvcyaml="dvc.yaml") as live:
         model.fit(x_train, y_train,
                   batch_size=params['batch_train'],
                   epochs=params['epoch'],
@@ -32,8 +32,8 @@ def main():
                   callbacks=[DVCLiveCallback(live=live)]
                   )
         # Save Model
-        model.save(metrics_path + 'phishing_model.h5')
-        live.log_artifact(metrics_path + "phishing_model.h5", type='model')
+        model.save(models_path + 'phishing_model.h5')
+        live.log_artifact(models_path + "phishing_model.h5", type='model')
     print("Trained model saved")
 
 

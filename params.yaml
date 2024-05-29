@@ -8,4 +8,6 @@
 'epoch': 1
 'embedding_dimension': 50
 'dataset_dir': "datasets/"
+'models_dir' : "models/"
+'reports_dir' : "reports/"
 'version': 0.1.0
