@@ -7,7 +7,7 @@ from sklearn.metrics import (classification_report,
                              accuracy_score,
                              roc_auc_score,
                              f1_score)
-from load_parameters import load_params
+from .load_parameters import load_params
 
 
 def evaluation(preds):
@@ -35,12 +35,12 @@ def evaluation(preds):
 if __name__ == "__main__":
     # Model Parameters
     params = load_params()
-    input_folder = params['dataset_dir'] + 'metrics'
+    input_folder = params['models_dir']
 
     predictions = load(f'{input_folder}/predictions.joblib')
     metric_dict = evaluation(predictions)
 
-    output_folder = input_folder
+    output_folder = params['reports_dir'] + 'metrics/'
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     with open(os.path.join(output_folder, "statistics.json"), "w") as f:
