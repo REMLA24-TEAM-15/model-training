@@ -127,7 +127,6 @@ def test_feature_privacy(data):
 
 
 def test_feature_code(data):
-
     texts = data["texts"]
     assert all(isinstance(text, str) for text in texts), (
         "All input features should be strings."

@@ -2,11 +2,6 @@ import pytest
 import os
 import yaml
 import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-from keras.api.models import load_model
-import pandas as pd
-from remlapreprocesspy import preprocess
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from keras.api.models import load_model
 
