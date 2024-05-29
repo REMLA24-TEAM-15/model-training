@@ -44,6 +44,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create .kaggle directory
+        run: mkdir -p /home/runner/.kaggle
+
       - name: Add kaggle.json
         run: echo "${{ secrets.KAGGLE_JSON }}" > /home/runner/.kaggle/kaggle.json
 
