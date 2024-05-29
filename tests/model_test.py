@@ -1,8 +1,8 @@
-import pytest
 import os
+import pytest
 import yaml
 import numpy as np
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.metrics import classification_report, accuracy_score
 from keras.api.models import load_model
 
 
@@ -33,18 +33,15 @@ def load_test_data_and_model():
     return x_test, y_test, model
 
 
-def test_model_performance(load_test_data_and_model):
+def test_model_performance(test_data_and_model):
     # Generate predictions
-    x_test, y_test, model = load_test_data_and_model
+    x_test, y_test, model = test_data_and_model
     y_pred = model.predict(x_test, batch_size=1000)
 
     # Convert predicted probabilities to binary labels
     y_pred_binary = (np.array(y_pred) > 0.5).astype(int)
 
     report = classification_report(y_test, y_pred_binary)
-
-    # Calculate the confusion matrix
-    confusion_mat = confusion_matrix(y_test, y_pred_binary)
 
     # Save accuracy to a file
     accuracy = accuracy_score(y_test, y_pred_binary)
