@@ -46,12 +46,12 @@ stages:
     - datasets/processed_data/ds_test.joblib
     - models/phishing_model.h5
     outs:
-    - reports/metrics/predictions.joblib
+    - models/predictions.joblib
   evaluate:
     cmd: python -m src.models.evaluate
     deps:
     - src/models/evaluate.py
-    - reports/metrics/predictions.joblib
+    - models/predictions.joblib
     outs:
     - reports/metrics/statistics.json
   release:

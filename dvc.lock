@@ -43,40 +43,40 @@ stages:
       md5: de4a2c3bc48f9a12edd1b58cd35e7d5e
       size: 5483016
   predict:
-    cmd: python src/models/predict.py
+    cmd: python -m src.models.predict
     deps:
-    - path: datasets/metrics/phishing_model.h5
-      hash: md5
-      md5: 80f8cc17c542e2f4a7d79ac02d45f7c6
-      size: 5483016
     - path: datasets/processed_data/ds_test.joblib
       hash: md5
       md5: aa588736dd32d491eecdbdeae8680a8d
       size: 292816302
+    - path: models/phishing_model.h5
+      hash: md5
+      md5: de4a2c3bc48f9a12edd1b58cd35e7d5e
+      size: 5483016
     - path: src/models/predict.py
       hash: md5
-      md5: 361e47789faeb4fa4c81d8d100f6d6e6
-      size: 831
+      md5: d6195c83766fcbfb3917cc3dde9195ad
+      size: 818
     outs:
-    - path: datasets/metrics/predictions.joblib
+    - path: models/predictions.joblib
       hash: md5
-      md5: 9ec4ee84094df3c9af25516b0b48bd61
+      md5: 65d4fe5cf7bace1e1df6ef0aae947d93
       size: 2913950
   evaluate:
-    cmd: python src/models/evaluate.py
+    cmd: python -m src.models.evaluate
     deps:
-    - path: datasets/metrics/predictions.joblib
+    - path: models/predictions.joblib
       hash: md5
-      md5: 9ec4ee84094df3c9af25516b0b48bd61
+      md5: 65d4fe5cf7bace1e1df6ef0aae947d93
       size: 2913950
     - path: src/models/evaluate.py
       hash: md5
-      md5: 30e5ecd8355f21854466c3631fc6b62d
-      size: 1569
+      md5: 347c1e4b8022ef7814361b021737245c
+      size: 1579
     outs:
-    - path: datasets/metrics/statistics.json
+    - path: reports/metrics/statistics.json
       hash: md5
-      md5: 754b4ddbcf16a655e1bc8d2b37e50982
+      md5: fafb669ad92e7d6738aeeaa19ff42bc1
       size: 56
   get_data:
     cmd: python -m src.data.get_data
@@ -140,14 +140,14 @@ stages:
   release:
     cmd: python src/release.py
     deps:
-    - path: datasets/metrics/phishing_model.h5
-      hash: md5
-      md5: 80f8cc17c542e2f4a7d79ac02d45f7c6
-      size: 5483016
     - path: datasets/processed_data/char_index.joblib
       hash: md5
       md5: 941dc7e5461b0a429941866a00102b8c
       size: 444
+    - path: models/phishing_model.h5
+      hash: md5
+      md5: de4a2c3bc48f9a12edd1b58cd35e7d5e
+      size: 5483016
     params:
       params.yaml:
         version: 0.1.0
