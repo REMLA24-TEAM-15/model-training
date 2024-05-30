@@ -25,13 +25,6 @@ def read_and_sample_data(file_path, sample_size=100):
         random.shuffle(lines)
         return lines[:sample_size]
 
-
-def save_sampled_data(file_path, data):
-    with open(file_path, "w", encoding="utf-8") as file:
-        for line in data:
-            file.write(line + "\n")
-
-
 def remove_sensitive_info(text):
     return SENSITIVE_PATTERNS.sub("[REDACTED]", text)
 

@@ -3,7 +3,7 @@ This module downloads the dataset from kaggle and stores it in the data folder.
 """
 import os
 import kaggle
-from ..models.load_parameters import load_params
+from src.models.load_parameters import load_params
 
 
 def get_data():
