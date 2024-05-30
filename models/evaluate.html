@@ -63,12 +63,12 @@ def evaluation(preds):
 if __name__ == &#34;__main__&#34;:
     # Model Parameters
     params = load_params()
-    input_folder = params[&#39;dataset_dir&#39;] + &#39;metrics&#39;
+    input_folder = params[&#39;models_dir&#39;]
 
     predictions = load(f&#39;{input_folder}/predictions.joblib&#39;)
     metric_dict = evaluation(predictions)
 
-    output_folder = input_folder
+    output_folder = params[&#39;reports_dir&#39;] + &#39;metrics/&#39;
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     with open(os.path.join(output_folder, &#34;statistics.json&#34;), &#34;w&#34;) as f:

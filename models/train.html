@@ -50,8 +50,8 @@ def main():
     model = compile_model(model, params[&#39;loss_function&#39;], params[&#39;optimizer&#39;])
 
     # Train Model
-    metrics_path = params[&#39;dataset_dir&#39;] + &#39;metrics/&#39;
-    with Live(metrics_path, dvcyaml=&#34;dvc.yaml&#34;) as live:
+    models_path = params[&#39;models_dir&#39;]
+    with Live(models_path, dvcyaml=&#34;dvc.yaml&#34;) as live:
         model.fit(x_train, y_train,
                   batch_size=params[&#39;batch_train&#39;],
                   epochs=params[&#39;epoch&#39;],
@@ -60,8 +60,8 @@ def main():
                   callbacks=[DVCLiveCallback(live=live)]
                   )
         # Save Model
-        model.save(metrics_path + &#39;phishing_model.h5&#39;)
-        live.log_artifact(metrics_path + &#34;phishing_model.h5&#34;, type=&#39;model&#39;)
+        model.save(models_path + &#39;phishing_model.h5&#39;)
+        live.log_artifact(models_path + &#34;phishing_model.h5&#34;, type=&#39;model&#39;)
     print(&#34;Trained model saved&#34;)
 
 
@@ -101,8 +101,8 @@ if __name__ == &#34;__main__&#34;:
     model = compile_model(model, params[&#39;loss_function&#39;], params[&#39;optimizer&#39;])
 
     # Train Model
-    metrics_path = params[&#39;dataset_dir&#39;] + &#39;metrics/&#39;
-    with Live(metrics_path, dvcyaml=&#34;dvc.yaml&#34;) as live:
+    models_path = params[&#39;models_dir&#39;]
+    with Live(models_path, dvcyaml=&#34;dvc.yaml&#34;) as live:
         model.fit(x_train, y_train,
                   batch_size=params[&#39;batch_train&#39;],
                   epochs=params[&#39;epoch&#39;],
@@ -111,8 +111,8 @@ if __name__ == &#34;__main__&#34;:
                   callbacks=[DVCLiveCallback(live=live)]
                   )
         # Save Model
-        model.save(metrics_path + &#39;phishing_model.h5&#39;)
-        live.log_artifact(metrics_path + &#34;phishing_model.h5&#34;, type=&#39;model&#39;)
+        model.save(models_path + &#39;phishing_model.h5&#39;)
+        live.log_artifact(models_path + &#34;phishing_model.h5&#34;, type=&#39;model&#39;)
     print(&#34;Trained model saved&#34;)</code></pre>
 </details>
 </dd>

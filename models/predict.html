@@ -36,7 +36,7 @@ def predict():
     # Model Parameters
     params = load_params()
     data_folder = params[&#39;dataset_dir&#39;] + &#34;processed_data/&#34;
-    model_folder = params[&#39;dataset_dir&#39;] + &#34;metrics/&#34;
+    model_folder = params[&#39;models_dir&#39;]
 
     # Load data and model
     x_test, y_test = load(f&#39;{data_folder}ds_test.joblib&#39;)
@@ -76,7 +76,7 @@ if __name__ == &#34;__main__&#34;:
     # Model Parameters
     params = load_params()
     data_folder = params[&#39;dataset_dir&#39;] + &#34;processed_data/&#34;
-    model_folder = params[&#39;dataset_dir&#39;] + &#34;metrics/&#34;
+    model_folder = params[&#39;models_dir&#39;]
 
     # Load data and model
     x_test, y_test = load(f&#39;{data_folder}ds_test.joblib&#39;)

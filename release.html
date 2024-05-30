@@ -37,8 +37,8 @@ if __name__ == &#39;__main__&#39;:
     input_folder = params[&#34;dataset_dir&#34;] + &#39;processed_data/&#39;
     char_index = load(input_folder + &#39;char_index.joblib&#39;)
 
-    metrics_path = params[&#39;dataset_dir&#39;] + &#39;metrics/&#39;
-    model = load_model(metrics_path + &#39;phishing_model.h5&#39;)
+    models_path = params[&#39;models_dir&#39;]
+    model = load_model(models_path + &#39;phishing_model.h5&#39;)
     version = params[&#39;version&#39;]
 
     out_dict = {
