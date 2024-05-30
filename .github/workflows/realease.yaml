@@ -60,7 +60,7 @@ jobs:
         run: poetry install --no-root
 
       - name: Test Kaggle
-        run: kaggle datasets list
+        run: poetry kaggle datasets list
 
       #- name: Authenticate with Kaggle
       #  run: poetry run kaggle datasets list
