@@ -44,14 +44,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Create .kaggle directory
-        run: mkdir -p /home/runner/.kaggle
-
-      - name: Add kaggle.json
-        run: echo "${{ secrets.KAGGLE_JSON }}" > /home/runner/.kaggle/kaggle.json
-
-      - name: Set permissions for kaggle.json
-        run: chmod 600 /home/runner/.kaggle/kaggle.json
+      - name: Configure Kaggle
+        run: |
+          mkdir -p ~/.kaggle
+          echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > ~/.kaggle/kaggle.json
+          chmod 600 ~/.kaggle/kaggle.json
 
       - name: Install poetry
         run: pip install poetry
