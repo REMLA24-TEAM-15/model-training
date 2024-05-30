@@ -57,7 +57,7 @@ jobs:
         run: pip install kaggle
 
       - name: Test Kaggle
-        run: poetry kaggle datasets list
+        run: kaggle datasets list
 
       - name: Install poetry
         run: pip install poetry
