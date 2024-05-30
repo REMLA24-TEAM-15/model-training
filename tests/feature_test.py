@@ -13,7 +13,7 @@ from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.text import Tokenizer
 
 # Define directories
-INPUT_DIR = os.getenv("INPUT_DIR", r"../datasets/raw_data/DL Dataset/")
+INPUT_DIR = os.getenv("INPUT_DIR", r"datasets/raw_data/DL Dataset/")
 
 SENSITIVE_PATTERNS = re.compile(r"(@|token|session|user|userid|"
                                 r"password|auth|files|pro)", re.IGNORECASE)
