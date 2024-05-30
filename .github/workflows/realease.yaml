@@ -23,7 +23,7 @@ jobs:
         with:
           tag_name: v${{ env.TAG }}
           release_name: Release v${{ env.TAG }}
-          body: | 
+          body: |
             Release for URL Phishing detector.
           draft: false
           prerelease: false
@@ -47,26 +47,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      #- name: Configure Kaggle
-      #  run: |
-      #    mkdir -p ~/.kaggle
-      #    echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > ~/.kaggle/kaggle.json
-      #    chmod 600 ~/.kaggle/kaggle.json
-
       - name: Install Kaggle
         run: pip install kaggle
-
-      - name: Test Kaggle
-        run: kaggle datasets list
 
       - name: Install poetry
         run: pip install poetry
 
       - name: Install dependencies
         run: poetry install --no-root
-
-      #- name: Authenticate with Kaggle
-      #  run: poetry run kaggle datasets list
 
       - name: Install pdoc
         run: poetry run pip install pdoc3
