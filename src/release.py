@@ -1,6 +1,6 @@
 from joblib import load, dump
 from tensorflow.keras.models import load_model
-from models.load_parameters import load_params
+from .models.load_parameters import load_params
 
 if __name__ == '__main__':
     # Model Parameters

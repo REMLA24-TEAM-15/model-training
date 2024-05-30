@@ -23,7 +23,7 @@ jobs:
         with:
           tag_name: v${{ env.TAG }}
           release_name: Release v${{ env.TAG }}
-          body: | 
+          body: |
             Release for URL Phishing detector.
           draft: false
           prerelease: false
@@ -37,3 +37,34 @@ jobs:
           asset_path: ./release.joblib
           asset_name: release.joblib
           asset_content_type: application/octet-stream
+
+  deploy-docs:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Kaggle
+        run: pip install kaggle
+
+      - name: Install poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install --no-root
+
+      - name: Install pdoc
+        run: poetry run pip install pdoc3
+
+      - name: Generate Docs
+        run: |
+          poetry run pdoc src --html --force --output-dir docs
+
+      - name: Deploy Docs to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./docs/src
