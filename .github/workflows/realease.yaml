@@ -53,14 +53,14 @@ jobs:
       - name: Set permissions for kaggle.json
         run: chmod 600 /home/runner/.kaggle/kaggle.json
 
-      - name: Authenticate with Kaggle
-        run: kaggle datasets list
-
       - name: Install poetry
         run: pip install poetry
 
       - name: Install dependencies
         run: poetry install --no-root
+
+      - name: Authenticate with Kaggle
+        run: kaggle datasets list
 
       - name: Install pdoc
         run: poetry run pip install pdoc3
