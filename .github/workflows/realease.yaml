@@ -50,6 +50,14 @@ jobs:
       #    echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > ~/.kaggle/kaggle.json
       #    chmod 600 ~/.kaggle/kaggle.json
 
+      - name: Set up environment variables for Kaggle authentication
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+
+      - name: Run Kaggle command
+        run: kaggle datasets list
+
       - name: Install poetry
         run: pip install poetry
 
