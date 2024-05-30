@@ -24,9 +24,10 @@ jobs:
         pip install poetry
         poetry install
 
-    - name: Download data
+    - name: Download data and process data
       run: |
          poetry run python src/data/get_data.py
+         poetry run python src/data/data_prep.py 
 
     - name: Run tests
       run: |
