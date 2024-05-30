@@ -5,6 +5,10 @@ on: [pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions: write-all
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
 
     steps:
     - name: Checkout code
