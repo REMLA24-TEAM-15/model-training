@@ -1,13 +1,13 @@
 import numpy as np
 import pytest
-from keras.models import create_model, compile_model
+import sys
+import keras.models
 from joblib import load
 import tensorflow as tf
-
+from src.models.load_parameters import load_params
 
 @pytest.fixture
 def model_params():
-    from load_parameters import load_params
     return load_params()
 
 
@@ -31,7 +31,6 @@ def test_non_determinism(model_params, datasets):
 
     # Set random seeds for reproducibility
     np.random.seed(42)
-
 
     # Create and train the model twice
     voc_size = len(load(model_params["dataset_dir"] + 'processed_data/char_index.joblib').keys())
