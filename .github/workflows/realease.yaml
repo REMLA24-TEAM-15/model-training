@@ -50,11 +50,11 @@ jobs:
       - name: Add kaggle.json
         run: echo "${{ secrets.KAGGLE_JSON }}" > /home/runner/.kaggle/kaggle.json
 
-      - name: Verify kaggle.json content
-        run: cat /home/runner/.kaggle/kaggle.json
-
       - name: Set permissions for kaggle.json
         run: chmod 600 /home/runner/.kaggle/kaggle.json
+
+      - name: Authenticate with Kaggle
+        run: kaggle datasets list
 
       - name: Install poetry
         run: pip install poetry
