@@ -53,17 +53,17 @@ jobs:
       #    echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > ~/.kaggle/kaggle.json
       #    chmod 600 ~/.kaggle/kaggle.json
 
-      - name: Install poetry
-        run: pip install poetry
-
-      - name: Install Kaggle CLI
-        run: poetry add kaggle
-
-      - name: Install dependencies
-        run: poetry install --no-root
+      - name: Install Kaggle
+        run: pip install kaggle
 
       - name: Test Kaggle
         run: poetry kaggle datasets list
+
+      - name: Install poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install --no-root
 
       #- name: Authenticate with Kaggle
       #  run: poetry run kaggle datasets list
