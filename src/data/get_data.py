@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, '.')
+
 """
 This module downloads the dataset from kaggle and stores it in the data folder.
 """
