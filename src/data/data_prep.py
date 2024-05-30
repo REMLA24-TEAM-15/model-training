@@ -1,6 +1,7 @@
 import sys
 sys.path.insert(0, '.')
 
+import os
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.utils import pad_sequences

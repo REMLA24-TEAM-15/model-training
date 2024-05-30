@@ -8,6 +8,7 @@ import keras.models
 from joblib import load
 import tensorflow as tf
 from src.models.load_parameters import load_params
+from src.models.model import *
 
 @pytest.fixture
 def model_params():
@@ -27,7 +28,6 @@ def model(model_params):
     voc_size = len(load(model_params["dataset_dir"] + 'processed_data/char_index.joblib').keys())
     model = create_model(voc_size, len(model_params['categories']))
     return compile_model(model, model_params['loss_function'], model_params['optimizer'])
-
 
 def test_non_determinism(model_params, datasets):
     (x_train, y_train), _ = datasets

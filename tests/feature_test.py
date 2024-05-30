@@ -4,10 +4,6 @@ This module contains tests for the features of the data.
 
 # pylint: disable=W0511, E0401, E0611, W0621
 
-import sys
-sys.path.insert(0, '/path/to/your/project/root')
-
-
 import os
 import random
 import re
