@@ -60,7 +60,7 @@ jobs:
         run: poetry install --no-root
 
       - name: Authenticate with Kaggle
-        run: kaggle datasets list
+        run: poetry run kaggle datasets list
 
       - name: Install pdoc
         run: poetry run pip install pdoc3
