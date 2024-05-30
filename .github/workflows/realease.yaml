@@ -44,11 +44,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure Kaggle
-        run: |
-          mkdir -p ~/.kaggle
-          echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > ~/.kaggle/kaggle.json
-          chmod 600 ~/.kaggle/kaggle.json
+      #- name: Configure Kaggle
+      #  run: |
+      #    mkdir -p ~/.kaggle
+      #    echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > ~/.kaggle/kaggle.json
+      #    chmod 600 ~/.kaggle/kaggle.json
 
       - name: Install poetry
         run: pip install poetry
@@ -56,8 +56,8 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root
 
-      - name: Authenticate with Kaggle
-        run: poetry run kaggle datasets list
+      #- name: Authenticate with Kaggle
+      #  run: poetry run kaggle datasets list
 
       - name: Install pdoc
         run: poetry run pip install pdoc3

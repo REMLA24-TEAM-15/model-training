@@ -7,7 +7,7 @@ from sklearn.metrics import (classification_report,
                              accuracy_score,
                              roc_auc_score,
                              f1_score)
-from load_parameters import load_params
+from .load_parameters import load_params
 
 
 def evaluation(preds):

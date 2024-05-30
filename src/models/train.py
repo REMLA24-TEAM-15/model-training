@@ -2,8 +2,8 @@ from joblib import load
 
 from dvclive import Live
 from dvclive.keras import DVCLiveCallback
-from model import create_model, compile_model
-from load_parameters import load_params
+from .model import create_model, compile_model
+from .load_parameters import load_params
 
 
 def main():
