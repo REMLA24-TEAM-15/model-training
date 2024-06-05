@@ -53,6 +53,9 @@ def test_non_determinism(model_params, datasets):
     weights_2 = model_2.get_weights()
 
     for w1, w2 in zip(weights_1, weights_2):
+        print(w1, w2)
+
+    for w1, w2 in zip(weights_1, weights_2):
         assert np.allclose(w1, w2), "Model weights are not consistent between training runs"
 
 
