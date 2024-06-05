@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.data.get_data API documentation</title>
-<meta name="description" content="This module downloads the dataset from kaggle and stores it in the data folder." />
+<meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,17 +22,19 @@
 <h1 class="title">Module <code>src.data.get_data</code></h1>
 </header>
 <section id="section-intro">
-<p>This module downloads the dataset from kaggle and stores it in the data folder.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;
+<pre><code class="python">import sys
+sys.path.insert(0, &#39;.&#39;)
+
+&#34;&#34;&#34;
 This module downloads the dataset from kaggle and stores it in the data folder.
 &#34;&#34;&#34;
 import os
 import kaggle
-from ..models.load_parameters import load_params
+from src.models.load_parameters import load_params
 
 
 def get_data():
