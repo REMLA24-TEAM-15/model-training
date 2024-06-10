@@ -1,12 +1,12 @@
 import sys
-sys.path.insert(0, '.')
-
 import os
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.utils import pad_sequences
 from joblib import dump
 from src.models.load_parameters import load_params
+
+sys.path.insert(0, '.')
 
 
 def load_data(file_path):

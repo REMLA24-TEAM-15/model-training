@@ -1,13 +1,11 @@
-# tests/test_model.py
-
 import os
 import random
 import pytest
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import accuracy_score
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from sklearn.metrics import accuracy_score
 from tensorflow.keras.models import load_model
 
 # Define directories
@@ -85,7 +83,8 @@ def test_model_on_slices(data, load_trained_model):
 
     for slice_name, (texts, labels) in slices.items():
         sequences = data['tokenizer'].texts_to_sequences(texts)
-        sequences = [[min(word_index, max_index) for word_index in sequence] for sequence in sequences]
+        sequences = [[min(word_index, max_index) for word_index in sequence]
+                     for sequence in sequences]
         X_test = pad_sequences(sequences, maxlen=input_shape[0], padding='post')
         print(f"Input shape for {slice_name}: {X_test.shape}")
         y_true = data['encoder'].transform(labels)
@@ -97,6 +96,7 @@ def test_model_on_slices(data, load_trained_model):
         print(f"Accuracy on {slice_name}: {accuracy}")
 
         assert accuracy > 0.5, f"Model accuracy on {slice_name} is below the threshold"
+
 
 if __name__ == '__main__':
     pytest.main([__file__])

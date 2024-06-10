@@ -1,12 +1,13 @@
 import sys
+import os
+import kaggle
+from src.models.load_parameters import load_params
+
 sys.path.insert(0, '.')
 
 """
 This module downloads the dataset from kaggle and stores it in the data folder.
 """
-import os
-import kaggle
-from src.models.load_parameters import load_params
 
 
 def get_data():
