@@ -26,8 +26,8 @@ jobs:
 
     - name: Download data and process data
       run: |
-         poetry run python src/data/get_data.py
-         poetry run python src/data/data_prep.py 
+         poetry run python -m src.data.get_data
+         poetry run python -m src.data.data_prep
 
     - name: Run tests
       run: |
