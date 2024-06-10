@@ -34,3 +34,4 @@ jobs:
         poetry run pytest tests/feature_test.py
         poetry run pytest tests/non_determinism.py
         poetry run pytest tests/data_slices_test.py
+        poetry runpytest tests/intergration_test.py
