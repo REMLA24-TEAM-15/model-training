@@ -1,14 +1,18 @@
-import sys
-sys.path.insert(0, '.')
-
 import numpy as np
 import pytest
-import sys
-import keras.models
-from joblib import load
+import random
 import tensorflow as tf
+from joblib import load
 from src.models.load_parameters import load_params
 from src.models.model import *
+
+
+# Function to set seeds for reproducibility
+def set_seeds(seed=42):
+    np.random.seed(seed)
+    random.seed(seed)
+    tf.random.set_seed(seed)
+
 
 @pytest.fixture
 def model_params():
@@ -29,18 +33,21 @@ def model(model_params):
     model = create_model(voc_size, len(model_params['categories']))
     return compile_model(model, model_params['loss_function'], model_params['optimizer'])
 
+
 def test_non_determinism(model_params, datasets):
     (x_train, y_train), _ = datasets
 
     # Set random seeds for reproducibility
-    np.random.seed(42)
+    set_seeds(42)
 
     # Create and train the model twice
     voc_size = len(load(model_params["dataset_dir"] + 'processed_data/char_index.joblib').keys())
+
+    set_seeds(42)
     model_1 = create_model(voc_size, len(model_params['categories']))
     model_1 = compile_model(model_1, model_params['loss_function'], model_params['optimizer'])
 
-    np.random.seed(42)
+    set_seeds(42)
     model_2 = create_model(voc_size, len(model_params['categories']))
     model_2 = compile_model(model_2, model_params['loss_function'], model_params['optimizer'])
 
