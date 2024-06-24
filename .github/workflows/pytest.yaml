@@ -26,9 +26,9 @@ jobs:
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> $GITHUB_ENV
         poetry install
 
-      - name: Check PATH
-        run: |
-          echo $PATH
+    - name: Check PATH
+      run: |
+        echo $PATH
 
 #    - name: Download data and process data
 #      run: |
