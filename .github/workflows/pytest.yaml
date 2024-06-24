@@ -23,6 +23,7 @@ jobs:
       run: |
         pip install poetry
         poetry install
+        poetry run pip install dvc
 
 #    - name: Download data and process data
 #      run: |
