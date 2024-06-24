@@ -70,21 +70,13 @@ def test_model_staleness(data, load_production_model):
     # Compile the production model
     production_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.001), metrics=['accuracy'])
 
-    # Print the production model summary
-    print("Production Model Summary:")
-    production_model.summary()
-
     # Train a new model with the latest data
-    max_sequence_length = 200  # Ensure this matches with the expected input shape of the model
+    max_sequence_length = 100
     vocab_size = len(data['tokenizer'].word_index) + 1  # +1 for the OOV token
     categories = len(data['encoder'].classes_)
 
     new_model = create_model(vocab_size, categories)
     new_model = compile_model(new_model, loss_function='binary_crossentropy', optimizer=Adam(learning_rate=0.001))
-
-    # Print the new model summary
-    print("New Model Summary:")
-    new_model.summary()
 
     X_train = pad_sequences(data['tokenizer'].texts_to_sequences(data['train_texts']), maxlen=max_sequence_length)
     y_train = data['encoder'].transform(data['train_labels'])
@@ -124,4 +116,3 @@ def test_model_staleness(data, load_production_model):
 
 if __name__ == '__main__':
     pytest.main([__file__])
-

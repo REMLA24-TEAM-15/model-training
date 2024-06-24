@@ -11,6 +11,7 @@ from src.models.load_parameters import load_params
 params = load_params()
 input_folder = params["dataset_dir"] + 'processed_data/'
 
+
 @pytest.fixture
 def data():
     # Load data
@@ -25,6 +26,7 @@ def data():
         "test_data": (x_test, y_test),
         "char_index": char_index
     }
+
 
 def test_full_ml_pipeline(data):
     try:
@@ -48,6 +50,7 @@ def test_full_ml_pipeline(data):
         assert accuracy > 0.5, "Model accuracy is below the acceptable threshold"
     except Exception as e:
         pytest.fail(f"Integration test failed: {e}")
+
 
 if __name__ == '__main__':
     pytest.main([__file__])
