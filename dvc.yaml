@@ -55,7 +55,7 @@ stages:
     outs:
     - reports/metrics/statistics.json
   release:
-    cmd: python src/release.py
+    cmd: python -m src.release
     deps:
     - datasets/processed_data/char_index.joblib
     - models/phishing_model.h5
