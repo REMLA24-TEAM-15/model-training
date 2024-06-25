@@ -19,23 +19,10 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install DVC
-      run: |
-        pip install dvc
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> $GITHUB_ENV
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> $BASH_ENV
-
     - name: Install poetry
       run: |
         pip install poetry
-        curl -sSL https://install.python-poetry.org | python3 -
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> $GITHUB_ENV
-        poetry install --no-root
-
-    - name: Check PATH
-      run: |
-        echo $PATH
-        
+        poetry install
 
 #    - name: Download data and process data
 #      run: |
@@ -44,7 +31,7 @@ jobs:
 
     - name: Pull model with DVC
       run: |
-        dvc pull
+        poetry run dvc pull
 
     - name: Run tests
       run: |
