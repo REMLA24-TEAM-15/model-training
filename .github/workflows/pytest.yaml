@@ -1,6 +1,9 @@
 name: ML Model Tests
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -30,8 +33,8 @@ jobs:
         poetry run python -m src.data.data_prep
         poetry run python -m tests.fetch_model
 
-
     - name: Run tests
       run: |
         poetry run pytest
+
 
