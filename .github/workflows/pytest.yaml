@@ -1,0 +1,38 @@
+name: ML Model Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install poetry
+        poetry install
+
+    - name: Download data and process data
+      run: |
+        poetry run python -m src.data.get_data
+        poetry run python -m src.data.data_prep
+        poetry run python -m tests.fetch_model
+
+    - name: Run tests
+      run: |
+        poetry run pytest
