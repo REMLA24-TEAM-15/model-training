@@ -26,7 +26,7 @@ jobs:
 
     - name: Download model weights
       run: |
-        gdown https://drive.google.com/uc?id=1gnXOJNdghhI4bcZq58f8Az1MGPYARYJ8 -O phishing_model.h5
+        gdown https://drive.google.com/uc?id=1gnXOJNdghhI4bcZq58f8Az1MGPYARYJ8 -O models/phishing_model.h5
 
     - name: Download data and process data
       run: |
