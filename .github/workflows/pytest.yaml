@@ -19,24 +19,16 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Cache Poetry dependencies
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.cache/pypoetry
-          ~/.virtualenvs
-        key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-        restore-keys: ${{ runner.os }}-poetry-
-
-    - name: Install Poetry
-      run: |
-        pip install poetry
-
     - name: Install dependencies
       run: |
+        pip install poetry gdown
         poetry install
 
-    - name: Download and process data
+    - name: Download model weights
+      run: |
+        gdown https://drive.google.com/uc?id=1gnXOJNdghhI4bcZq58f8Az1MGPYARYJ8 -O phishing_model.h5
+
+    - name: Download data and process data
       run: |
         poetry run python -m src.data.get_data
         poetry run python -m src.data.data_prep
@@ -45,10 +37,13 @@ jobs:
       run: |
         poetry run python -m src.models.train
 
-    - name: Run tests with coverage
+    - name: Run tests
       run: |
-        poetry run pytest --cov=src --cov-report=xml tests/
-      continue-on-error: true
+        poetry run pytest tests/feature_test.py
+        poetry run pytest tests/non_determinism.py
+        poetry run pytest tests/data_slices_test.py
+        poetry run pytest tests/integration_test.py
+        poetry run pytest tests/mutamorphic_test.py
 
     - name: Upload test results
       uses: actions/upload-artifact@v2
