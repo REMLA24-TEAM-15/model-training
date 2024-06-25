@@ -24,14 +24,14 @@ jobs:
         pip install poetry
         poetry install
 
-#    - name: Download data and process data
-#      run: |
-#         poetry run python -m src.data.get_data
-#         poetry run python -m src.data.data_prep
-
-    - name: Pull model with DVC
+    - name: Download data and process data
       run: |
-        poetry run dvc pull
+         poetry run python -m src.data.get_data
+         poetry run python -m src.data.data_prep
+
+    - name: Train model
+      run: |
+         poetry run python -m src.models.train
 
     - name: Run tests
       run: |
