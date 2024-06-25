@@ -27,12 +27,6 @@ def datasets(model_params):
     x_train, y_train = load(input_folder + 'ds_train.joblib')
     x_val, y_val = load(input_folder + 'ds_val.joblib')
 
-    # Use a smaller subset for testing to speed up the process
-    subset_size = 100  # Adjust size as necessary
-    x_train = x_train[:subset_size]
-    y_train = y_train[:subset_size]
-    return (x_train, y_train), (x_val, y_val)
-
 
 @pytest.fixture
 def model(model_params):
