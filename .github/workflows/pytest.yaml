@@ -1,9 +1,6 @@
 name: ML Model Tests
 
-on:
-  pull_request:
-    branches:
-      - main
+on: [pull_request]
 
 jobs:
   test:
@@ -24,17 +21,22 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install poetry
+        pip install poetry gdown
         poetry install
-
+    - name: Download model weights
+      run: |
+        gdown https://drive.google.com/uc?id=1gnXOJNdghhI4bcZq58f8Az1MGPYARYJ8 -O models/phishing_model.h5
     - name: Download data and process data
       run: |
         poetry run python -m src.data.get_data
         poetry run python -m src.data.data_prep
-        poetry run python -m tests.fetch_model
-
+    - name: Train model
+      run: |
+        poetry run python -m src.models.train
     - name: Run tests
       run: |
-        poetry run pytest
-
-
+        poetry run pytest tests/feature_test.py
+        poetry run pytest tests/non_determinism.py
+        poetry run pytest tests/data_slices_test.py
+        poetry run pytest tests/mutamorphic_test.py
+        poetry run pytest tests/features_cost_test.py
