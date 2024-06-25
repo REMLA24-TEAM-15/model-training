@@ -1,6 +1,5 @@
 import requests
 import os
-import configparser
 
 
 def download_latest_joblib(org_name, repo_name, file_name, download_dir):
@@ -51,7 +50,7 @@ def download_latest_joblib(org_name, repo_name, file_name, download_dir):
 
 
 def main():
-    download_latest_joblib("REMLA24-TEAM-15", "model-training", "release.joblib", "../models")
+    download_latest_joblib("REMLA24-TEAM-15", "model-training", "phishing_model.h5", "../models")
 
 
 if __name__ == "__main__":

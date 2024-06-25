@@ -71,7 +71,6 @@ def test_metamorphic_properties_with_repair(data):
 
     # Original test data
     X_test = data["x_test"]
-    y_test = data['encoder'].transform(data['test_labels'])
 
     # Predictions on original test data
     try:
@@ -132,4 +131,3 @@ def test_metamorphic_properties_with_repair(data):
 
 if __name__ == '__main__':
     pytest.main([__file__])
-

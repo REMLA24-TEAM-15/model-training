@@ -7,6 +7,7 @@ from src.models.load_parameters import load_params
 
 MAX_PARAMETERS = 1_000_000  # Example threshold for max parameters
 
+
 @pytest.fixture
 def data():
     # Load parameters
@@ -24,6 +25,7 @@ def data():
         "params": params
     }
 
+
 def test_cost_of_features(data):
     x_train, y_train, char_index, params = data.values()
 
@@ -39,7 +41,9 @@ def test_cost_of_features(data):
     num_params = model.count_params()
 
     print(f"Number of parameters in the model: {num_params}")
-    assert num_params < MAX_PARAMETERS, f"Model has too many parameters: {num_params} (Limit: {MAX_PARAMETERS})"
+    assert num_params < MAX_PARAMETERS, f"Model has too many parameters: " \
+                                        f"{num_params} (Limit: {MAX_PARAMETERS})"
+
 
 if __name__ == "__main__":
     pytest.main([__file__])

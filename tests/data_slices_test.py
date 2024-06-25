@@ -94,9 +94,10 @@ def test_model_on_slices(data, load_trained_model):
     accuracy = accuracy_score(y_true, y_pred_labels)
     print(f"Accuracy on representative slice: {accuracy}")
 
-    # Check if the accuracy on the representative slice is within a reasonable range of the full test set accuracy
+    # Check if the accuracy on the slice is within a reasonable range of the full test set accuracy
     full_sequences = data['tokenizer'].texts_to_sequences(data['test_texts'])
-    full_sequences = [[min(word_index, max_index) for word_index in sequence] for sequence in full_sequences]
+    full_sequences = [[min(word_index, max_index) for word_index in sequence]
+                      for sequence in full_sequences]
     X_full_test = pad_sequences(full_sequences, maxlen=input_shape[0], padding='post')
     y_full_true = data['encoder'].transform(data['test_labels'])
 
@@ -107,8 +108,10 @@ def test_model_on_slices(data, load_trained_model):
     print(f"Accuracy on full test set: {full_accuracy}")
 
     # Allowing a slightly larger margin for statistical variations
-    assert abs(accuracy - full_accuracy) < 0.1, "Model performance on representative slice deviates significantly from full test set"
+    assert abs(
+        accuracy - full_accuracy) < 0.1, "Model performance on representative slice deviates " \
+                                         "significantly from full test set "
+
 
 if __name__ == '__main__':
     pytest.main([__file__])
-

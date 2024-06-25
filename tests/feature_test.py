@@ -25,6 +25,7 @@ def read_and_sample_data(file_path, sample_size=100):
         random.shuffle(lines)
         return lines[:sample_size]
 
+
 def remove_sensitive_info(text):
     return SENSITIVE_PATTERNS.sub("[REDACTED]", text)
 
