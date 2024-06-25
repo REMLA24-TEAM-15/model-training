@@ -26,6 +26,7 @@ def datasets(model_params):
     input_folder = model_params["dataset_dir"] + 'processed_data/'
     x_train, y_train = load(input_folder + 'ds_train.joblib')
     x_val, y_val = load(input_folder + 'ds_val.joblib')
+    return (x_train, y_train), (x_val, y_val)
 
 
 @pytest.fixture
