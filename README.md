@@ -1,45 +1,41 @@
-# REMLA-TEAM-15
+# Description
+This is the data pipeline repository for group 15 for CS4295-Release Engineering for Machine Learning Applications.
 
-## Installation
+# Pipeline design
+The pipeline is divided into six stages:
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/REMLA24-TEAM-15/REMLA-GROUP-15.git
+1. get data
+2. data preperation 
+3. train
+4. predict
+5. evalaute
+6. release  
 
-2. **Navigate to the project directory:**
-   ```bash
-   cd REMLA-GROUP-15
+Each stage has a corresponding file in the `src` folder. Additionally, the `dvc.yaml` file specifies the exact dependencies and outputs for each stage. We chose to divide the pipeline into these stages because each has a well-defined input and output, adhering to standard ML practices.
 
-3. **Create a virtual environment:**
-   ```bash
-   python -m venv venv
+# Prerequisites
+ * Python 3.10 is required to run the code.
+ * Create a conda environment :
 
-4. **Activate the virtual environment:**
-   - **Windows:**
-     ```bash
-     venv\Scripts\activate
-     ```
-   - **Linux/MacOS:**
-     ```bash
-     source venv/bin/activate
-     ```
+   ```conda create --name remlapy310 python=3.10 ```
 
-
-6. **Install the dependencies from requirements.txt:**
-   ```bash
-   pip install -r requirements.txt
-
-7. **DVC:**
-   ```bash
-   dvc pull
-   dvc repro
-
-8. **Running Pylint to check the code quality:**
-   ```bash
-   pylint src
+   ``` conda activate remlapy310 ```
   
-9. **Running flake8 to check the code quality:**
-   - **If it does not return anything, the code quality is good:**
-     ```bash
-     flake8 src
-     ```
+   (alternatively , look at the `run.sh` file in the repository)
+
+ * To install the required packages , we use [poetry](https://python-poetry.org/docs/). To install and run poetry , use the following commands.
+
+   ```pip install poetry ```
+ *  For DVC , please refer [official docs](https://dvc.org/doc)
+
+
+# Setup
+1. Once the virtual env, dvc and poetry is setup ,  run  ```poetry install``` to install the required dependecies.
+2. To get the data from kaggle , sign up on [kaggle](https://www.kaggle.com) . Then go to the 'Account' tab of your user profile (https://www.kaggle.com/<username>/account) and select 'Create API Token'. This will trigger the download of kaggle.json, a file containing your API credentials. Place this file in the location ~/.kaggle/kaggle.json.
+3. For Linters 
+Install Pylint  : ```pip install pylint```
+Install Flake   : ```pip install flake8 ``` 
+
+
+
+
