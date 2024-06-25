@@ -175,6 +175,8 @@ werkzeug = "3.0.3"
 wrapt = "1.13.3"
 yarl = "1.9.4"
 zc-lockfile = "3.0.post1"
+pytest = "8.2.1"
+pytest-cov = "5.0.0"
 
 [build-system]
 requires = ["poetry-core"]
