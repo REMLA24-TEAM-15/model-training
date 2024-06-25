@@ -99,8 +99,7 @@ because these are common ML variable names.
 
 # Project Structure 
 
-$ tree
-
+```
 │   .dvcignore
 │   .flake8
 │   .gitignore
@@ -115,27 +114,27 @@ $ tree
 │   run.sh
 │
 ├───.dvc
-│   │   .gitignore
-│   │   config
+│       .gitignore
+│       config
 │
 ├───.github
 │   └───workflows
 │           pylint.yaml
+│           pytest.yaml
 │           realease.yaml
 │           tag.yaml
 │
-├───datasets
-│   ├───processed_data
-│   │       char_index.joblib
-│   │       ds_test.joblib
-│   │       ds_train.joblib
-│   │       ds_val.joblib
+├───.idea
+│   │   .gitignore
+│   │   misc.xml
+│   │   model-training.iml
+│   │   modules.xml
+│   │   vcs.xml
+│   │   workspace.xml
 │   │
-│   └───raw_data
-│       └───DL Dataset
-│               test.txt
-│               train.txt
-│               val.txt
+│   └───inspectionProfiles
+│           profiles_settings.xml
+│           Project_Default.xml
 │
 ├───models
 │   │   metrics.json
@@ -162,20 +161,28 @@ $ tree
 │           .gitignore
 │           statistics.json
 │
-└───src
-    │   release.py
-    │   __init__.py
-    │
-    ├───data
-    │   │   data_prep.py
-    │   │   get_data.py
-    │   │   __init__.py
-    │
-    ├───models
-    │   │   evaluate.py
-    │   │   load_parameters.py
-    │   │   model.py
-    │   │   predict.py
-    │   │   train.py
-    │   │   __init__.py
-
+├───src
+│   │   release.py
+│   │   __init__.py
+│   │
+│   ├───data
+│   │       data_prep.py
+│   │       get_data.py
+│   │       __init__.py
+│   │
+│   └───models
+│           evaluate.py
+│           load_parameters.py
+│           model.py
+│           predict.py
+│           train.py
+│           __init__.py
+│
+└───tests
+        data_slices_test.py
+        features_cost_test.py
+        feature_test.py
+        mutamorphic_test.py
+        non_determinism_test.py
+        __init__.py
+```
