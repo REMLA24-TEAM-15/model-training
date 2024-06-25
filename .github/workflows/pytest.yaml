@@ -33,9 +33,5 @@ jobs:
 
     - name: Run tests
       run: |
-        poetry run pytest tests/feature_test.py
-        poetry run pytest tests/non_determinism.py
-        poetry run pytest tests/data_slices_test.py
-        poetry run pytest tests/mutamorphic_test.py
-        poetry run pytest tests/features_cost_test.py
+        poetry run pytest
 
