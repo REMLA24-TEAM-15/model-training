@@ -21,7 +21,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install poetry gdown
+        pip install poetry
         poetry install
 
     - name: Download data and process data
@@ -30,9 +30,6 @@ jobs:
         poetry run python -m src.data.data_prep
         poetry run python -m tests.fetch_model
 
-    - name: Train model
-      run: |
-        poetry run python -m src.models.train
 
     - name: Run tests
       run: |
