@@ -62,29 +62,11 @@ stages:
     params:
     - version
 metrics:
-- reports/metrics/metrics.json
-- reports/metrics/metrics.json
-- reports/metrics/metrics.json
-- reports/metrics/metrics.json
-- reports/metrics/metrics.json
-- models/metrics.json
+  - reports/metrics/metrics.json
 plots:
-- reports/plots/metrics:
-    x: step
-- reports/plots/metrics:
-    x: step
-- reports/plots/metrics:
-    x: step
-- reports/plots/metrics:
-    x: step
-- reports/plots/metrics:
-    x: step
-- models/plots/metrics:
-    x: step
+  - reports/plots/metrics:
+      x: step
 artifacts:
-  modelsphishing_model:
-    path: modelsphishing_model.h5
-    type: model
   phishing_model:
     path: models/phishing_model.h5
     type: model
