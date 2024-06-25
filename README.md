@@ -36,6 +36,30 @@ Each stage has a corresponding file in the `src` folder. Additionally, the `dvc.
 Install Pylint  : ```pip install pylint```
 Install Flake   : ```pip install flake8 ``` 
 
+# Run Instructions 
 
+###### _If you want to download the data before running the pipeline run_:
+ ```poetry run python -m src.data.get_data ```
+
+1. To run the data pipeline use , ` dvc repro ` or `dvc exp run` 
+2. The metrics and results are stored in the reports and models directories.
+3. To run pylint: ```pylint <file/dir> > reports/pylintreport.txt```
+4. To run flake8: ```flake8 <file/dir>```
+5. To run tests : ```pytest tests/```
+
+# Project Structure 
+
+$ tree
+
+
+# Model Performance 
+
+{"accuracy": 0.93132, "roc_auc": 0.92469, "f1": 0.91813}
+
+[![DVC-metrics](https://img.shields.io/badge/dynamic/json?style=flat-square&colorA=grey&colorB=99ff99&label=Accuracy&url=https://raw.githubusercontent.com/remla24-team6/phishing_detection_cnn/main/reports/metrics.json&query=test_accuracy)](https://raw.githubusercontent.com/remla24-team6/phishing_detection_cnn/main/reports/metrics.json) 
+
+[![DVC-metrics](https://img.shields.io/badge/dynamic/json?style=flat-square&colorA=grey&colorB=99ff99&label=F1&url=https://raw.githubusercontent.com/remla24-team6/phishing_detection_cnn/main/reports/metrics.json&query=avg_f1)](https://raw.githubusercontent.com/remla24-team6/phishing_detection_cnn/main/reports/metrics.json) 
+
+[![DVC-metrics](https://img.shields.io/badge/dynamic/json?style=flat-square&colorA=grey&colorB=99ff99&label=ROC_AUC&url=https://raw.githubusercontent.com/remla24-team6/phishing_detection_cnn/main/reports/metrics.json&query=roc_auc)](https://raw.githubusercontent.com/remla24-team6/phishing_detection_cnn/main/reports/metrics.json) 
 
 
