@@ -28,7 +28,6 @@ jobs:
       run: |
         poetry run python -m src.data.get_data
         poetry run python -m src.data.data_prep
-        poetry run python -m tests.fetch_model
 
     - name: Run tests
       run: |
