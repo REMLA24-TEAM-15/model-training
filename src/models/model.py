@@ -1,127 +1,55 @@
-import pytest
-import numpy as np
-from sklearn.preprocessing import LabelEncoder
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.models import load_model
-from tensorflow.keras.optimizers import Adam
-from sklearn.metrics import accuracy_score
-import os
-import random
-from src.models.model import create_model, compile_model
+"""
+Configures training model parametres.
+"""
+from keras.models import Sequential
+from keras.layers import Embedding, Conv1D, MaxPooling1D, Flatten, Dense, Dropout
 
-# Define directories
-INPUT_DIR = os.getenv("INPUT_DIR", r"datasets/raw_data/DL Dataset/")
 
-def read_and_sample_data(file_path, sample_size=100):
-    with open(file_path, "r", encoding="utf-8") as file:
-        lines = [line.strip() for line in file.readlines()]
-        random.shuffle(lines)
-        return lines[:sample_size]
+def create_model(voc_size, categories):
+    """
+    Builds a model for classification tasks.
 
-@pytest.fixture
-def data():
-    sample_size = 100  # Set sample size for each file
+    Args:
+        voc_size (int): Vocabulary size for the embedding layer.
 
-    train = read_and_sample_data(INPUT_DIR + "train.txt", sample_size)
-    val = read_and_sample_data(INPUT_DIR + "val.txt", sample_size)
-    test = read_and_sample_data(INPUT_DIR + "test.txt", sample_size)
+    Returns:
+        keras.models.Sequential: Compiled Keras model.
+    """
+    model = Sequential()
+    model.add(Embedding(voc_size + 1, 50))
 
-    # Process train data
-    raw_x_train = [line.split("\t")[1] for line in train]
-    raw_y_train = [line.split("\t")[0] for line in train]
+    model.add(Conv1D(128, 3, activation='tanh'))
+    model.add(MaxPooling1D(3))
+    model.add(Dropout(0.2))
 
-    # Process validation data
-    raw_x_val = [line.split("\t")[1] for line in val]
-    raw_y_val = [line.split("\t")[0] for line in val]
+    model.add(Conv1D(128, 7, activation='tanh', padding='same'))
+    model.add(Dropout(0.2))
 
-    # Process test data
-    raw_x_test = [line.split("\t")[1] for line in test]
-    raw_y_test = [line.split("\t")[0] for line in test]
+    model.add(Conv1D(128, 5, activation='tanh', padding='same'))
+    model.add(Dropout(0.2))
 
-    # Tokenizer setup
-    tokenizer = Tokenizer(lower=True, char_level=False, oov_token='-n-')
-    tokenizer.fit_on_texts(raw_x_train + raw_x_val + raw_x_test)
+    model.add(Conv1D(128, 3, activation='tanh', padding='same'))
+    model.add(MaxPooling1D(3))
+    model.add(Dropout(0.2))
 
-    # Label Encoder setup
-    encoder = LabelEncoder()
-    encoder.fit(raw_y_train + raw_y_val + raw_y_test)
+    model.add(Conv1D(128, 5, activation='tanh', padding='same'))
+    model.add(Dropout(0.2))
 
-    return {
-        "train_texts": raw_x_train,
-        "train_labels": raw_y_train,
-        "val_texts": raw_x_val,
-        "val_labels": raw_y_val,
-        "test_texts": raw_x_test,
-        "test_labels": raw_y_test,
-        "tokenizer": tokenizer,
-        "encoder": encoder,
-    }
+    model.add(Conv1D(128, 3, activation='tanh', padding='same'))
+    model.add(MaxPooling1D(3))
+    model.add(Dropout(0.2))
 
-@pytest.fixture
-def load_production_model():
-    # Load the current production model
-    model = load_model('models/phishing_model.h5')
+    model.add(Conv1D(128, 3, activation='tanh', padding='same'))
+    model.add(MaxPooling1D(3))
+    model.add(Dropout(0.2))
+
+    model.add(Flatten())
+
+    model.add(Dense(categories - 1, activation='sigmoid'))
+
     return model
 
-def test_model_staleness(data, load_production_model):
-    production_model = load_production_model
 
-    # Compile the production model
-    production_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.001), metrics=['accuracy'])
-
-    # Print the production model summary
-    print("Production Model Summary:")
-    production_model.summary()
-
-    # Train a new model with the latest data
-    max_sequence_length = 200  # Ensure this matches with the expected input shape of the model
-    vocab_size = len(data['tokenizer'].word_index) + 1  # +1 for the OOV token
-    categories = len(data['encoder'].classes_)
-
-    new_model = create_model(vocab_size, categories)
-    new_model = compile_model(new_model, loss_function='binary_crossentropy', optimizer=Adam(learning_rate=0.001))
-
-    # Print the new model summary
-    print("New Model Summary:")
-    new_model.summary()
-
-    X_train = pad_sequences(data['tokenizer'].texts_to_sequences(data['train_texts']), maxlen=max_sequence_length)
-    y_train = data['encoder'].transform(data['train_labels'])
-
-    print(f"X_train shape: {X_train.shape}")
-    print(f"Sample X_train sequences: {X_train[:5]}")
-    print(f"y_train shape: {y_train.shape}")
-    print(f"Sample y_train: {y_train[:5]}")
-
-    new_model.fit(X_train, y_train, epochs=5, batch_size=32, validation_split=0.1)
-
-    # Evaluate both models on the validation dataset
-    X_val = pad_sequences(data['tokenizer'].texts_to_sequences(data['val_texts']), maxlen=max_sequence_length)
-    y_val = data['encoder'].transform(data['val_labels'])
-
-    print(f"X_val shape: {X_val.shape}")
-    print(f"Sample X_val sequences: {X_val[:5]}")
-    print(f"y_val shape: {y_val.shape}")
-    print(f"Sample y_val: {y_val[:5]}")
-
-    try:
-        production_y_pred = production_model.predict(X_val)
-        production_y_pred_labels = (production_y_pred > 0.5).astype(int)
-        production_accuracy = accuracy_score(y_val, production_y_pred_labels)
-
-        new_y_pred = new_model.predict(X_val)
-        new_y_pred_labels = (new_y_pred > 0.5).astype(int)
-        new_accuracy = accuracy_score(y_val, new_y_pred_labels)
-
-        print(f"Production model accuracy: {production_accuracy}")
-        print(f"New model accuracy: {new_accuracy}")
-
-        assert production_accuracy >= new_accuracy, "The production model is stale. The new model outperforms it significantly."
-    except Exception as e:
-        print(f"Error during model prediction: {e}")
-        raise e
-
-if __name__ == '__main__':
-    pytest.main([__file__])
-
+def compile_model(model, loss_function, optimizer):
+    model.compile(loss=loss_function, optimizer=optimizer, metrics=['accuracy'])
+    return model
