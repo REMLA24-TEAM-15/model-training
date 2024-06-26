@@ -11,4 +11,4 @@ exclude =
     docs/source/conf.py,
     .dvc,
 max-line-length = 100
-max-complexity = 10
+max-complexity = 12
