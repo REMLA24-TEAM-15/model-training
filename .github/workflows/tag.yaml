@@ -34,7 +34,7 @@ jobs:
           poetry install
       - name: Analysing the code with pylint
         run: |
-          pylint src
+          pylint
       - name: Analysing the code with Flake8
         run: |
           flake8 .
