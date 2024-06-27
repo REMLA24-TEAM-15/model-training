@@ -23,13 +23,12 @@ jobs:
       run: |
         pip install poetry
         poetry install
-        pip install -i https://test.pypi.org/simple/ libml-URLPhishing==4.* --no-deps
 
     - name: Download data and process data
       run: |
-        python -m src.data.get_data
-        python -m src.data.data_prep
+        poetry run python -m src.data.get_data
+        poetry run python -m src.data.data_prep
 
     - name: Run tests
       run: |
-        pytest --cov=src --cov-report=xml:reports/coverage.xml tests/
+        poetry run pytest --cov=src --cov-report=xml:reports/coverage.xml tests/

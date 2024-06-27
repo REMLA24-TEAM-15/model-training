@@ -2188,6 +2188,26 @@ files = [
 ]
 
 [[package]]
+name = "libml-urlphishing"
+version = "4.1.5"
+description = "Library to download and process data for the URL phishing project"
+optional = false
+python-versions = "*"
+files = [
+    {file = "libml_URLPhishing-4.1.5-py3-none-any.whl", hash = "sha256:b6224ef3f4c336e031e091fdaab6ccf54af25759aa8df56ecfdc9409113fa640"},
+]
+
+[package.dependencies]
+numpy = ">=1.26"
+scikit-learn = ">=1.4"
+tensorflow = ">=2.16"
+
+[package.source]
+type = "legacy"
+url = "https://test.pypi.org/simple"
+reference = "test"
+
+[[package]]
 name = "markdown"
 version = "3.6"
 description = "Python implementation of John Gruber's Markdown."
@@ -4546,4 +4566,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "12647bf47d53aca363b36aaf6736e8b294694c60152449e60ede7b9dbe917319"
+content-hash = "9e15eda16416ccd52103e03f48583598dddf19d26763c6a849425bf59951f110"
