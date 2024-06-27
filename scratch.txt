@@ -1,0 +1,5 @@
+ poetry add scikit-learn
+ poetry add tensorflow
+ poetry add dvclive
+ poetry add seaborn
+ poetry add dvc_gdrive
