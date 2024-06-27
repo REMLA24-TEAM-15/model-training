@@ -23,7 +23,7 @@ jobs:
       run: |
         pip install poetry
         poetry install
-        pip install -i https://test.pypi.org/simple/ libml-URLPhishing
+        pip install -i https://test.pypi.org/simple/ libml-URLPhishing==4.*
 
     - name: Download data and process data
       run: |
