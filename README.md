@@ -1,5 +1,6 @@
 # Description
-This is the data pipeline repository for group 15 for CS4295-Release Engineering for Machine Learning Applications.
+This is the data pipeline repository for group 15 for CS4295-Release Engineering for Machine Learning Applications. \
+[GitHub Pages](https://github.com/REMLA24-TEAM-15/model-training/deployments/github-pages)
 
 # Pipeline design
 The pipeline is divided into six stages:
