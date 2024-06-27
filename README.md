@@ -273,3 +273,7 @@ Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
         non_determinism_test.py
         __init__.py
 ```
+
+
+## Tokens Required:
+For this repository you require a GitHub token, Kaggle Key and Kaggle username as secrets (e.g GH_Token) with package and repo read/write permissions. 
