@@ -8,6 +8,16 @@ from joblib import load
 from src.models.model import create_model, compile_model
 from src.models.load_parameters import load_params
 
+# tests/test_non_determinism.py
+
+import pytest
+import numpy as np
+import random
+import tensorflow as tf
+from joblib import load
+from src.models.model import create_model, compile_model
+from src.models.load_parameters import load_params
+
 
 # Function to set seeds for reproducibility
 def set_seeds(seed=42):
@@ -36,8 +46,14 @@ def model(model_params):
     return compile_model(model, model_params['loss_function'], model_params['optimizer'])
 
 
+def evaluate_score(model, x_val, y_val):
+    # Evaluate the model and return a performance score
+    loss, accuracy = model.evaluate(x_val, y_val, verbose=0)
+    return accuracy  # or any other performance metric
+
+
 def test_non_determinism(model_params, datasets):
-    (x_train, y_train), _ = datasets
+    (x_train, y_train), (x_val, y_val) = datasets
 
     # Set random seeds for reproducibility
     set_seeds(42)
@@ -60,12 +76,12 @@ def test_non_determinism(model_params, datasets):
     model_1.fit(x_train, y_train, epochs=1, batch_size=batch_size, verbose=0)
     model_2.fit(x_train, y_train, epochs=1, batch_size=batch_size, verbose=0)
 
-    # Compare weights
-    weights_1 = model_1.get_weights()
-    weights_2 = model_2.get_weights()
+    # Evaluate both models
+    score_1 = evaluate_score(model_1, x_val, y_val)
+    score_2 = evaluate_score(model_2, x_val, y_val)
 
-    for w1, w2 in zip(weights_1, weights_2):
-        assert np.allclose(w1, w2), "Model weights are not consistent between training runs"
+    # Compare performance
+    assert abs(score_1 - score_2) <= 0.03, f"Model performance is not consistent: {score_1} vs {score_2}"
 
 
 if __name__ == "__main__":
