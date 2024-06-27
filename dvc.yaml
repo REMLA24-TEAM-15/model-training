@@ -62,10 +62,13 @@ stages:
     params:
     - version
 metrics:
-  - reports/metrics/metrics.json
+- reports/metrics/metrics.json
+- models/metrics.json
 plots:
-  - reports/plots/metrics:
-      x: step
+- reports/plots/metrics:
+    x: step
+- models/plots/metrics:
+    x: step
 artifacts:
   phishing_model:
     path: models/phishing_model.h5
