@@ -3,6 +3,7 @@ from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.utils import pad_sequences
 from joblib import dump
+import libml
 from ..models.load_parameters import load_params
 
 
@@ -16,7 +17,8 @@ def load_data(file_path):
 
 def preprocess_data(raw_x_train, raw_y_train, raw_x_val, raw_y_val, raw_x_test, raw_y_test):
     # Tokenization and Padding
-    tokenizer = Tokenizer(lower=True, char_level=True, oov_token='-n-')
+    tokenizer_lib = libml.TokenizeQuery()
+    tokenizer = tokenizer_lib.tokenizer
     tokenizer.fit_on_texts(raw_x_train + raw_x_val + raw_x_test)
     char_index = tokenizer.word_index
     sequence_length = 200

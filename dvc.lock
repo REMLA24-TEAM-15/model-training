@@ -115,8 +115,8 @@ stages:
       size: 46258330
     - path: src/data/data_prep.py
       hash: md5
-      md5: 820e3c2aec165a944abe52795d544520
-      size: 2431
+      md5: c6b1d477750df08324c88896de5a6b2d
+      size: 2538
     params:
       params.yaml:
         dataset_dir: datasets/
