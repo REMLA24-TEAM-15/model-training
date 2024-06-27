@@ -27,9 +27,9 @@ jobs:
 
     - name: Download data and process data
       run: |
-        poetry run python -m src.data.get_data
-        poetry run python -m src.data.data_prep
+        python -m src.data.get_data
+        python -m src.data.data_prep
 
     - name: Run tests
       run: |
-        poetry run pytest --cov=src --cov-report=xml:reports/coverage.xml tests/
+        pytest --cov=src --cov-report=xml:reports/coverage.xml tests/
