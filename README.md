@@ -46,7 +46,7 @@ Install Flake   : ```pip install flake8 ```
 2. The metrics and results are stored in the reports and models directories.
 3. To run pylint: ```pylint <file/dir> > reports/pylintreport.txt```
 4. To run flake8: ```flake8 <file/dir>```
-5. To run tests : ```pytest --cov=src --cov-report=xml:reports/coverage.xml tests/ ```
+5. To run tests : ```pytest --cov-report term --cov=src tests/ | tee reports/coverage_report.txt ```
 
 
 # Model Performance
